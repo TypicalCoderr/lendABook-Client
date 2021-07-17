@@ -15,7 +15,9 @@ function Footer() {
       <div className="footerLinksContainer">
         <div className="footerLinksWrapper">
           <div className="footerLinkItem">
-            <div className="footerLinkTitle ">About Us</div>
+            <div className="footerLinkTitle ">
+              <h3>About Us</h3>
+            </div>
             <Link className="footerLink" to="/sign-up">
               How it works
             </Link>
@@ -33,7 +35,9 @@ function Footer() {
             </Link>
           </div>
           <div className="footerLinkItem">
-            <div className="footerLinkTitle ">Contact Us</div>
+            <div className="footerLinkTitle ">
+              <h3>Contact Us</h3>
+            </div>
             <Link className="footerLink" to="/">
               Contact
             </Link>
@@ -50,7 +54,9 @@ function Footer() {
         </div>
         <div className="footerLinksWrapper">
           <div className="footerLinkItem">
-            <div className="footerLinkTitle ">Videos</div>
+            <div className="footerLinkTitle ">
+              <h3>Videos</h3>
+            </div>
             <Link className="footerLink" to="/">
               Submit Video
             </Link>
@@ -65,7 +71,7 @@ function Footer() {
             </Link>
           </div>
           <div className="footerLinkItem">
-            <div className="footerLinkTitle ">Social Media</div>
+            <div className="footerLinkTitle "><h3>Social Media</h3></div>
             <Link className="footerLink" to="/">
               Instagram
             </Link>
