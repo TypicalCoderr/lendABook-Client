@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../Button";
+import { ImBooks } from 'react-icons/im';
+import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "../Navbar/Navbar.css";
 
@@ -32,14 +34,12 @@ function Navbar() {
             <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
               Lend-A-Book
               <div className="logo-icon">
-                <i class="fas fa-book-open" />
+                <ImBooks className = "navbar-icon"/>
               </div>
             </Link>
-            {/* <div className="logo-icon">
-            <i class="fas fa-book-open" />
-          </div> */}
+             
             <div className="menu-icon" onClick={handleClick}>
-              <i className={click ? "fas fa-times" : "fas fa-bars"} />
+              {click ? <FaTimes/> : <FaBars/>} 
             </div>
             <ul className={click ? "nav-menu active" : "nav-menu"}>
               <li className="nav-item">
