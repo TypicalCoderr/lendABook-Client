@@ -1,8 +1,9 @@
-import React from "react";
-import "../App.css";
-import { Button } from "./Button";
-import "./HomeSection.css";
-import backgroundImage from "../images/bg2.gif";
+import React from 'react';
+import '../App.css';
+import { Button } from './Button';
+import { Link } from 'react-router-dom';
+import './HomeSection.css';
+import backgroundImage from '../images/bg2.gif';
 
 function HomeSection() {
   return (

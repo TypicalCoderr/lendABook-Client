@@ -4,6 +4,7 @@ import { ImBooks } from 'react-icons/im';
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "../Navbar/Navbar.css";
+import { IconContext } from 'react-icons/lib';
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -28,18 +29,18 @@ function Navbar() {
 
   return (
     <>
-      
+      <IconContext.Provider value={{ color: "#fff" }}>
         <nav className="navbar">
           <div className="navbar-container">
             <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
               Lend-A-Book
               <div className="logo-icon">
-                <ImBooks className = "navbar-icon"/>
+                <ImBooks className="navbar-icon" />
               </div>
             </Link>
-             
+
             <div className="menu-icon" onClick={handleClick}>
-              {click ? <FaTimes/> : <FaBars/>} 
+              {click ? <FaTimes /> : <FaBars />}
             </div>
             <ul className={click ? "nav-menu active" : "nav-menu"}>
               <li className="nav-item">
@@ -55,11 +56,11 @@ function Navbar() {
 
               <li>
                 <Link
-                  to="/sign-up"
+                  to="/login"
                   className="nav-links-mobile"
                   onClick={closeMobileMenu}
                 >
-                  Sign Up
+                  LOGIN
                 </Link>
               </li>
 
@@ -69,7 +70,7 @@ function Navbar() {
                   className="nav-links-mobile"
                   onClick={closeMobileMenu}
                 >
-                  Sign Up
+                  SIGNUP
                 </Link>
               </li>
             </ul>
@@ -77,6 +78,7 @@ function Navbar() {
             {button && <Button buttonStyle="btn--outline">LOGIN</Button>}
           </div>
         </nav>
+      </IconContext.Provider>
     </>
   );
 }
