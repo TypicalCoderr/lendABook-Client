@@ -16,10 +16,10 @@
   margin-left: 50%;
 }
 
-.get-started > h1,p{
+.get-started > h1,
+p {
   color: #242424;
 }
-
 
 .hero-container > h1 {
   color: #242424;
