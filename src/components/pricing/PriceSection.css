@@ -3,45 +3,31 @@ ul {
 }
 
 .pricing.wrapper {
+  padding: 100px 0 160px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
-  @media screen and (max-width: 960px) {
-    margin: 0 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  justify-content: center;
+  background: #fafafa;
+  margin-left: 50px;
 }
 
 .price-heading > h1 {
   color: #242424;
   font-size: 28px;
   margin-bottom: 54px;
-  text-align: center;
 }
 
 .pricing-section {
-  padding: 100px 0 160px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  background: #fff;
+  align-items: start;
+  margin: 0 auto;
 }
 
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  @media screen and (max-width: 960px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
 }
 h1 {
   justify-content: center;
@@ -53,7 +39,7 @@ h1.title {
   margin-bottom: 24px;
 }
 
-.card {
+.cards {
   background: #8f92ad;
   box-shadow: 0 6px 20px rgba(56, 125, 255, 0.2);
   width: 280px;
@@ -64,10 +50,10 @@ h1.title {
   border-radius: 4px;
 }
 
-.card:nth-child(2) {
+.cards:nth-child(2) {
   margin: 24px;
 }
-.card:hover {
+.cards:hover {
   background: #2e2f50;
   transform: scale(1.06);
   transition: all 0.3s ease-out;
@@ -90,20 +76,20 @@ h2 > span {
   font-size: 1rem;
 }
 
-.card ul {
+.cards ul {
   text-align: center;
   font-size: 0.9rem;
   font-weight: lighter;
 }
 
-.card ul li:before {
+.cards ul li:before {
   content: "✓";
   margin-right: 0.5rem;
   color: #bc1e4a;
   font-size: 1.5rem;
 }
 
-.card ul li {
+.cards ul li {
   margin-bottom: 0.5rem;
 }
 
@@ -132,36 +118,53 @@ h2 > span {
   margin-top: 5px;
 }
 
-@media (max-width: 1112px) {
-  .cards {
-    justify-content: center;
-  }
-
-  .card {
-    width: 280px;
-    margin: 2rem;
-  }
-}
-
-@media (max-width: 960px) {
-  .card {
-    width: 280px;
+@media screen and (max-width: 960px) {
+  .container {
+    display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
-  .card:hover {
+
+  .cards {
+    width: 90%;
+  }
+
+  .pricing-section {
+    margin: 0 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cards:nth-child(1) {
+    transform: scale(1);
+    background: #8f92ad;
+    margin: 24px;
+  }
+
+  .cards:nth-child(2) {
+    transform: scale(1);
+    background: #8f92ad;
+    margin: 24px;
+  }
+
+  .cards:nth-child(3) {
+    transform: scale(1);
+    background: #8f92ad;
+    margin: 24px;
+  }
+
+  .cards:nth-child(4) {
+    transform: scale(1);
+    background: #8f92ad;
+    margin: 24px;
+  }
+
+  .cards:hover {
     transform: none;
-  }
-
-  @media (max-width: 674px) {
-    .card {
-      width: 280px;
-      flex-direction: column;
-    }
-  }
-
-  @media (max-width: 500px) {
-    .card {
-      width: 90%;
-    }
+    background: #2e2f50;
+    color: #fff;
   }
 }

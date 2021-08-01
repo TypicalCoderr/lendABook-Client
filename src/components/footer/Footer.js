@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Button } from '../Button';
 import {
   FaFacebook,
   FaInstagram,
@@ -7,140 +8,121 @@ import {
   FaTwitter,
   FaLinkedin,
 } from "react-icons/fa";
+import { ImBooks } from "react-icons/im";
 import "./Footer.css";
 
 function Footer() {
   return (
-    <div className="footerContainer">
-      <div className="footerLinksContainer">
-        <div className="footerLinksWrapper">
-          <div className="footerLinkItem">
-            <div className="footerLinkTitle ">
-              <h3>About Us</h3>
-            </div>
-            <Link className="footerLink" to="/sign-up">
-              How it works
-            </Link>
-            <Link className="footerLink" to="/">
-              Testimonials
-            </Link>
-            <Link className="footerLink" to="/">
-              Careers
-            </Link>
-            <Link className="footerLink" to="/">
-              Investors
-            </Link>
-            <Link className="footerLink" to="/">
-              Terms of Service
-            </Link>
+    <div className="footer-container">
+      <section className="footer-subscription">
+        <p className="footer-subscription-heading">
+          Join our exclusive membership to receive the latest news and trends
+        </p>
+        <p className="footer-subscription-text">
+          You can unsubscribe at any time.
+        </p>
+        <div className="input-areas">
+          <form>
+            <input
+              className="footer-input"
+              name="email"
+              type="email"
+              placeholder="Your Email"
+            />
+            <Button buttonStyle="btn--outline">Subscribe</Button>
+          </form>
+        </div>
+      </section>
+      <div className="footer-links">
+        <div className="footer-link-wrapper">
+          <div className="footer-link-items">
+            <h2>About Us</h2>
+            <Link to="/sign-up">How it works</Link>
+            <Link to="/">Testimonials</Link>
+            <Link to="/">Careers</Link>
+            <Link to="/">Investors</Link>
+            <Link to="/">Terms of Service</Link>
           </div>
-          <div className="footerLinkItem">
-            <div className="footerLinkTitle ">
-              <h3>Contact Us</h3>
-            </div>
-            <Link className="footerLink" to="/">
-              Contact
-            </Link>
-            <Link className="footerLink" to="/">
-              Support
-            </Link>
-            <Link className="footerLink" to="/">
-              Destinations
-            </Link>
-            <Link className="footerLink" to="/">
-              Sponsorships
-            </Link>
+          <div className="footer-link-items">
+            <h2>Contact Us</h2>
+            <Link to="/">Contact</Link>
+            <Link to="/">Support</Link>
+            <Link to="/">Destinations</Link>
+            <Link to="/">Sponsorships</Link>
           </div>
         </div>
-        <div className="footerLinksWrapper">
-          <div className="footerLinkItem">
-            <div className="footerLinkTitle ">
-              <h3>Videos</h3>
-            </div>
-            <Link className="footerLink" to="/">
-              Submit Video
-            </Link>
-            <Link className="footerLink" to="/">
-              Ambassadors
-            </Link>
-            <Link className="footerLink" to="/">
-              Agency
-            </Link>
-            <Link className="footerLink" to="/">
-              Influencer
-            </Link>
+        <div className="footer-link-wrapper">
+          <div className="footer-link-items">
+            <h2>Videos</h2>
+            <Link to="/">Submit Video</Link>
+            <Link to="/">Ambassadors</Link>
+            <Link to="/">Agency</Link>
+            <Link to="/">Influencer</Link>
           </div>
-          <div className="footerLinkItem">
-            <div className="footerLinkTitle "><h3>Social Media</h3></div>
-            <Link className="footerLink" to="/">
-              Instagram
-            </Link>
-            <Link className="footerLink" to="/">
-              Facebook
-            </Link>
-            <Link className="footerLink" to="/">
-              Youtube
-            </Link>
-            <Link className="footerLink" to="/">
-              Twitter
-            </Link>
+          <div className="footer-link-items">
+            <h2>Social Media</h2>
+            <Link to="/">Instagram</Link>
+            <Link to="/">Facebook</Link>
+            <Link to="/">Youtube</Link>
+            <Link to="/">Twitter</Link>
           </div>
         </div>
       </div>
-      <div className="socialMedia">
-        <div className="socialMediaWrap">
-          <div className="socialLogo" to="/">
-            <i class="fas fa-book-open" />
-            Lend-A-Book
+      <section className="social-media">
+        <div className="social-media-wrap">
+          <div className="footer-logo">
+            <Link to="/" className="social-logo">
+              <ImBooks className="navbar-icon" />
+               Lend-A-Book
+            </Link>
           </div>
-          <div className="websiteRights">Lend-A-Book © 2021</div>
-          <div className="socialIcons">
-            <div
-              className="socialIconLink"
-              href="/"
+          <small className="website-rights">Lend-A-Book © 2021</small>
+          <div className="social-icons">
+            <Link
+              className="social-icon-link"
+              to="/"
               target="_blank"
               aria-label="Facebook"
             >
               <FaFacebook />
-            </div>
-            <div
-              className="socialIconLink"
-              href="/"
+            </Link>
+            <Link
+              className="social-icon-link"
+              to="/"
               target="_blank"
               aria-label="Instagram"
             >
               <FaInstagram />
-            </div>
-            <div
-              className="socialIconLink"
-              href={
+            </Link>
+            <Link
+              className="social-icon-link"
+              to={
                 "//www.youtube.com/channel/UCsKsymTY_4BYR-wytLjex7A?view_as=subscriber"
               }
-              rel="noopener noreferrer"
               target="_blank"
               aria-label="Youtube"
             >
               <FaYoutube />
-            </div>
-            <div
-              className="socialIconLink"
-              href="/"
+            </Link>
+            <Link
+              className="social-icon-link"
+              to="/"
               target="_blank"
               aria-label="Twitter"
             >
               <FaTwitter />
-            </div>
-            <div
-              className="socialIconLink"
-              href="/"
+            </Link>
+            <Link
+              className="social-icon-link"
+              to="/"
               target="_blank"
               aria-label="LinkedIn"
             >
               <FaLinkedin />
-            </div>
+            </Link>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
