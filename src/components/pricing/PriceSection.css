@@ -20,7 +20,7 @@ ul {
 .pricing-section {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   margin: 0 auto;
 }
 
@@ -28,6 +28,7 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 20px;
 }
 h1 {
   justify-content: center;
@@ -48,11 +49,10 @@ h1.title {
   text-decoration: none;
   text-align: center;
   border-radius: 4px;
+  
 }
 
-.cards:nth-child(2) {
-  margin: 24px;
-}
+
 .cards:hover {
   background: #2e2f50;
   transform: scale(1.06);
@@ -105,7 +105,9 @@ h2 > span {
 }
 
 #card-1 .card-btn:hover,
+#card-2 .card-btn:hover,
 #card-3 .card-btn:hover,
+#card-4 .card-btn:hover,
 .active .card-btn {
   background-color: #bc1e4a;
 }
@@ -127,6 +129,7 @@ h2 > span {
     width: 100%;
   }
 
+ 
   .cards {
     width: 90%;
   }

@@ -2,10 +2,10 @@ export const homeObjOne = {
   lightBg: false,
   lightText: true,
   lightTextDesc: true,
-  topLine: "Exclusive Access",
+  topLine: "Explore",
   headline: "Unlimited Books & Videos",
   description:
-    "Get access to our exclusive diamond card that allows you to  send unlimited transactions without getting charged any fees",
+    "Get access to our exclusive plans that allows you to  access unlimited books and videos everyday.",
   buttonLabel: "Get Started",
   imgStart: "",
   img: "images/new1.gif",
