@@ -129,6 +129,12 @@ h2 > span {
     width: 100%;
   }
 
+  .price-heading{
+    justify-content: center;
+    text-align: center;
+  }
+
+ 
  
   .cards {
     width: 90%;
