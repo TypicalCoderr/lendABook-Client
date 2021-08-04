@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../Button";
-import { ImBooks } from 'react-icons/im';
+import { ImBooks } from "react-icons/im";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "../Navbar/Navbar.css";
-import { IconContext } from 'react-icons/lib';
+import { IconContext } from "react-icons/lib";
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -66,7 +66,7 @@ function Navbar() {
 
               <li>
                 <Link
-                  to="/sign-up"
+                  to=""
                   className="nav-links-mobile"
                   onClick={closeMobileMenu}
                 >
@@ -74,8 +74,8 @@ function Navbar() {
                 </Link>
               </li>
             </ul>
-            {button && <Button buttonStyle="btn--outline">SIGNUP</Button>}
             {button && <Button buttonStyle="btn--outline">LOGIN</Button>}
+            {button && <Button buttonStyle="btn--outline">SIGNUP</Button>}
           </div>
         </nav>
       </IconContext.Provider>

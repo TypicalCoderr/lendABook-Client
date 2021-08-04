@@ -1,12 +1,12 @@
-import React from 'react';
-import './Button.css';
-import { Link } from 'react-router-dom';
+import React from "react";
+import "./Button.css";
+import { Link } from "react-router-dom";
 
-const STYLES = ['btn--primary', 'btn--outline', 'btn--test'];
+const STYLES = ["btn--primary", "btn--outline", "btn--test"];
 
-const SIZES = ['btn--medium', 'btn--large', 'btn--mobile', 'btn--wide'];
+const SIZES = ["btn--medium", "btn--large", "btn--mobile", "btn--wide"];
 
-const COLOR = ['primary', 'blue', 'red', 'green'];
+const COLOR = ["primary", "blue", "red", "green"];
 
 export const Button = ({
   children,
@@ -14,7 +14,7 @@ export const Button = ({
   onClick,
   buttonStyle,
   buttonSize,
-  buttonColor
+  buttonColor,
 }) => {
   const checkButtonStyle = STYLES.includes(buttonStyle)
     ? buttonStyle
@@ -25,7 +25,7 @@ export const Button = ({
   const checkButtonColor = COLOR.includes(buttonColor) ? buttonColor : null;
 
   return (
-    <Link to='/sign-up' className='btn-mobile'>
+    <Link to="/SignUp" className="btn-mobile">
       <button
         className={`btn ${checkButtonStyle} ${checkButtonSize} ${checkButtonColor}`}
         onClick={onClick}
