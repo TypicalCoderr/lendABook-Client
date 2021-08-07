@@ -2,8 +2,11 @@ import React from "react";
 import validate from "./validationInfo";
 import useForm from "./useForm";
 import "./SignUp.css";
+import { useHistory } from "react-router-dom";
+
 
 const SignUp = (submitForm) => {
+  let history = useHistory();
   const { handleChange, handleSubmit, values, errors } = useForm(
     submitForm,
     validate
@@ -69,7 +72,9 @@ const SignUp = (submitForm) => {
             Sign up
           </button>
           <span className="form-input-login">
-            Already have an account? Login <a href="#">here</a>
+            Already have an account? Login <a onClick={() => {
+              history.push("/login");
+            }}>here</a>
           </span>
         </form>
       </div>

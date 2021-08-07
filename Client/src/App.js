@@ -13,10 +13,11 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route path='/' exact component={Home} />
-          <Route path='/SignUp' exact component={SignUp}/>
+          <Route path="/" exact component={Home} />
+          <Route path="/SignUp" exact component={SignUp} />
+          {/* <Route path="*" exact component={PageNotFound} /> */}
         </Switch>
-        <Footer/>
+        <Footer />
       </Router>
     </>
   );
