@@ -17,24 +17,7 @@ function HomeSection({
   imgStart,
 }) {
   return (
-    // <div
-    //   className="home-container"
-    //   style={{ background: `url(${backgroundImage})` }}
-    // >
-    //   <div className="get-started">
-    //     <h1>Start reading, start inspiring</h1>
-    //     <p>What are you waiting for?</p>
-    //     <div className="hero-btns">
-    //       <Button
-    //         className="btns"
-    //         buttonStyle="btn--outline"
-    //         buttonSize="btn--large"
-    //       >
-    //         GET STARTED
-    //       </Button>
-    //     </div>
-    //   </div>
-    // </div>
+    
     <div
       className={lightBg ? "home__hero-section" : "home__hero-section darkBg"}
     >
