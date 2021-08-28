@@ -1,0 +1,88 @@
+.container-login {
+  padding: 120px;
+  height: 100%;
+}
+.col-1 {
+  display: flex;
+  width: 50%;
+  justify-content: center;
+  padding: 30px;
+}
+
+.form-login {
+  display: flex;
+  direction: rtl;
+  padding: 30px;
+  width: 50%;
+  flex-direction: column;
+}
+
+.login-form-details {
+  display: flex;
+  padding-top: 50px;
+  flex-direction: column;
+}
+
+label {
+  color: gray;
+}
+
+hr {
+  border: 1px solid #fff;
+  width: 50%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+input[type="text"],
+[type="password"] {
+  display: block;
+  direction: ltr;
+  width: 80%;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+.p {
+  color: #aaa;
+  padding: 10px;
+}
+
+.img-form {
+  width: 1300px;
+  align-content: flex-start;
+}
+
+input[type="submit"] {
+  width: 80%;
+  background-color: #1990fe;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+input[type="submit"]:hover {
+  background-color: #0a84f7;
+  color: #242424;
+}
+
+.signup-link {
+  text-align: center;
+  width: 80%;
+}
