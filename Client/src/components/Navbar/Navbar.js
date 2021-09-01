@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "../Button";
 import { ImBooks } from "react-icons/im";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import "../Navbar/Navbar.css";
+import "./Navbar.css";
 import { IconContext } from "react-icons/lib";
+import { Button } from "../Button";
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -44,19 +44,27 @@ function Navbar() {
             </div>
             <ul className={click ? "nav-menu active" : "nav-menu"}>
               <li className="nav-item">
-                <Link to="/Home" className="nav-links" onClick={closeMobileMenu}>
+                <Link
+                  to="/Home"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
                   Home
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/AboutUs" className="nav-links" onClick={closeMobileMenu}>
+                <Link
+                  to="/AboutUs"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
                   About us
                 </Link>
               </li>
 
               <li>
                 <Link
-                  to="/login"
+                  to="/Login"
                   className="nav-links-mobile"
                   onClick={closeMobileMenu}
                 >
@@ -66,7 +74,7 @@ function Navbar() {
 
               <li>
                 <Link
-                  to=""
+                  to="/SignUp"
                   className="nav-links-mobile"
                   onClick={closeMobileMenu}
                 >
@@ -74,8 +82,13 @@ function Navbar() {
                 </Link>
               </li>
             </ul>
-            {button && <Button buttonStyle="btn--outline">LOGIN</Button>}
-            {button && <Button buttonStyle="btn--outline">SIGNUP</Button>}
+
+            <Link to="/Login" className="btn--outline">
+              LOGIN
+            </Link>
+            <Link to="/SignUp" className="btn--outline">
+              SIGNUP
+            </Link>
           </div>
         </nav>
       </IconContext.Provider>
