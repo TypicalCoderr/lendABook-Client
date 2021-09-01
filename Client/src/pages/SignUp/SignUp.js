@@ -1,10 +1,10 @@
 import React from "react";
 
-import { Form } from "./Form";
+import {  FormSignUp } from "./Form";
 
 function SignUp() {
   return (
-    <Form/>
+    <FormSignUp/>
   );
 }
 

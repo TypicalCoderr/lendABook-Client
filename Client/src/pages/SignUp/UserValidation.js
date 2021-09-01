@@ -7,12 +7,20 @@ export const signupSchema = yup.object().shape({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   email: yup.string().email().required(),
-  age: yup.number().positive().integer().required(),
+  age: yup
+    .number()
+    .transform((value) => (isNaN(value) ? undefined : value))
+    .positive()
+    .integer()
+    .required(),
   phoneNo: yup
     .string()
     .matches(phoneRegExp, "Phone number is not valid")
     .min(10)
     .required(),
   password: yup.string().min(6).required(),
-  confirmPassword: yup.string().oneOf([yup.ref("password"), null]),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Password does not match")
+    .required(),
 });

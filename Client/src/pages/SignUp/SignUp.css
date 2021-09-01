@@ -14,6 +14,13 @@
   flex-direction: column;
 }
 
+/* .form {
+  display: flex;
+  padding: 30px;
+  width: 50%;
+  flex-direction: column;
+}
+
 .form-details {
   display: flex;
   padding-top: 50px;
@@ -32,7 +39,8 @@ hr {
 }
 
 input[type="text"],
-[type="password"] {
+[type="password"],
+[type="number"] {
   width: 80%;
   border: 2px solid #aaa;
   border-radius: 4px;
@@ -44,9 +52,16 @@ input[type="text"],
 }
 
 input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="password"]:focus,
+[type="number"]:focus {
   border-color: dodgerBlue;
   box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .p {
@@ -59,7 +74,7 @@ input[type="password"]:focus {
   align-content: flex-start;
 }
 
-input[type="submit"] {
+button[type="submit"] {
   width: 80%;
   background-color: #1990fe;
   color: white;
@@ -72,9 +87,48 @@ input[type="submit"] {
   font-weight: 700;
 }
 
-input[type="submit"]:hover {
+button[type="submit"]:hover {
   background-color: #0a84f7;
   color: #242424;
+} */
+.formDetails {
+  display: flex;
+  padding-top: 50px;
+  flex-direction: column;
+}
+
+.formDetails #inputCreatePost {
+  width: 80%;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.formDetails button {
+  width: 80%;
+  background-color: #1990fe;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.formDetails button:hover {
+  background-color: #0a84f7;
+  color: #242424;
+  cursor: pointer;
+}
+
+span {
+  color: red;
 }
 
 .login-link {
