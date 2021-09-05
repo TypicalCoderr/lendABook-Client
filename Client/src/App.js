@@ -1,11 +1,11 @@
-import React from 'react';
-import {Navbar} from './components';
-import './App.css';
-import Home from './components/pages/homepage/homepage';
-import SignUp from './components/pages/SignUp/SignUp';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Footer from './components/footer/Footer';
-
+import React from "react";
+import { Navbar } from "./components";
+import "./App.css";
+import Home from "./pages/homepage/homepage";
+import SignUp from "./pages/SignUp/SignUp";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Footer from "./components/footer/Footer";
+import Login from "./pages/Login/Login";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/SignUp" exact component={SignUp} />
-          {/* <Route path="*" exact component={PageNotFound} /> */}
+          <Route path="/Login" exact component={Login} />
         </Switch>
         <Footer />
       </Router>

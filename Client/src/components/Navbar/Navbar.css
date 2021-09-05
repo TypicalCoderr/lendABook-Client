@@ -1,5 +1,5 @@
 .navbar {
-  background: #2e2f50;
+  background: #125ae6;
   height: 80px;
   display: flex;
   justify-content: center;
@@ -8,6 +8,7 @@
   position: sticky;
   top: 0;
   z-index: 999;
+  box-shadow: 2px 2px 5px black;
 }
 
 .navbar-container {
@@ -18,8 +19,8 @@
 }
 
 .navbar-logo {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
   color: #ffff;
   justify-self: start;
   margin-left: 5px;
@@ -72,7 +73,7 @@
 }
 
 .nav-links:hover {
-  border-bottom: 4px solid black;
+  color: #242424;
   transition: all 0.2s ease-out;
 }
 
