@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Image, Form } from "react-bootstrap";
 import img from "../../assets/login-form.svg";
 import "./login.scss";
 
-function login() {
+function Login() {
   return (
     <>
       <Container className="login">
@@ -41,4 +41,4 @@ function login() {
   );
 }
 
-export default login;
+export default Login;

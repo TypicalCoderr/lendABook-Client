@@ -4,7 +4,7 @@ import { ImBooks } from "react-icons/im";
 import { IconContext } from "react-icons/lib";
 import "./navbar.scss";
 
-function navbar() {
+function Navbar() {
   return (
     <div>
       <IconContext.Provider value={{ color: "white", size: "30px" }}>
@@ -17,7 +17,7 @@ function navbar() {
         >
           <Container className="nav-container">
             <ImBooks className="logo-icon" />
-            <Navbar.Brand className="logo-name" href="#home">
+            <Navbar.Brand className="logo-name" href="/">
               Lend A Book
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -65,4 +65,4 @@ function navbar() {
   );
 }
 
-export default navbar;
+export default Navbar;

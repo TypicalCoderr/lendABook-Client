@@ -5,7 +5,7 @@ import img from "../../assets/book-lover.svg";
 import "./home.scss";
 import Pricing from "../../components/pricing/priceChart";
 
-function home() {
+function Home() {
   return (
     <>
       <Container className="container">
@@ -30,4 +30,4 @@ function home() {
   );
 }
 
-export default home;
+export default Home;

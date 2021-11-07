@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import "./priceChart.scss";
 
-function priceChart() {
+function PriceChart() {
   return (
     <div className="pricing">
       <Container class="container">
@@ -107,4 +107,4 @@ function priceChart() {
   );
 }
 
-export default priceChart;
+export default PriceChart;
