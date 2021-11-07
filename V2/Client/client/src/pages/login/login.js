@@ -2,10 +2,12 @@ import React from "react";
 import { Container, Row, Col, Button, Image, Form } from "react-bootstrap";
 import img from "../../assets/login-form.svg";
 import "./login.scss";
+import Navbar from "../../components/navbar/navbar";
 
 function Login() {
   return (
     <>
+      <Navbar />
       <Container className="login">
         <Row>
           <Col className="img-box">

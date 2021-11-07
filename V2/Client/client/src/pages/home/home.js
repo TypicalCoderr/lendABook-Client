@@ -3,11 +3,13 @@ import { Container, Row, Col, Button, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import img from "../../assets/book-lover.svg";
 import "./home.scss";
+import Navbar from "../../components/navbar/navbar";
 import Pricing from "../../components/pricing/priceChart";
 
 function Home() {
   return (
     <>
+      <Navbar />
       <Container className="container">
         <Row className="row">
           <Col className="col1">

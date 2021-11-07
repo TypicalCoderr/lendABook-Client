@@ -8,6 +8,7 @@ import {
   InputGroup,
   Form,
 } from "react-bootstrap";
+import Navbar from "../../components/navbar/navbar";
 
 function ImageForm() {
   const [selectedImage, setSelectedImage] = useState();
@@ -25,6 +26,7 @@ function ImageForm() {
   };
   return (
     <div>
+      <Navbar />
       <Container className="img-uploader">
         <Row>
           <Col>

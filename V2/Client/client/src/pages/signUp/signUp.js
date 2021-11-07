@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Image, Form } from "react-bootstrap";
 import img from "../../assets/sign-up-form.svg";
 import "./signUp.scss";
+import Navbar from "../../components/navbar/navbar";
 import PropTypes from "prop-types";
 
 function SignUp(props) {
@@ -19,6 +20,7 @@ function SignUp(props) {
 
   return (
     <div>
+      <Navbar />
       <Container className="register">
         <Row>
           <Col className="form-signup">

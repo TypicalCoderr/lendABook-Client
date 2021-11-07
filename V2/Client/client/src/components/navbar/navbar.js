@@ -4,7 +4,7 @@ import { ImBooks } from "react-icons/im";
 import { IconContext } from "react-icons/lib";
 import "./navbar.scss";
 
-function Navbar() {
+function navbar() {
   return (
     <div>
       <IconContext.Provider value={{ color: "white", size: "30px" }}>
@@ -65,4 +65,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default navbar;
