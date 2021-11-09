@@ -7,6 +7,7 @@ import {
   Image,
   Form,
   Alert,
+  Modal,
 } from "react-bootstrap";
 import img from "../../assets/sign-up-form.svg";
 import "./signUp.scss";
@@ -29,7 +30,7 @@ function SignUp(props) {
   const [nofiy, setNotify] = useState("");
 
   const role = "customer";
-  const accountType = "free";
+  const accountType = "not verified";
 
   //Alert
   const [show, setShow] = useState(true);
@@ -70,6 +71,7 @@ function SignUp(props) {
       lastName,
       email,
       password,
+      confirmPassword,
       age,
       contactNo,
       role,
@@ -150,6 +152,7 @@ function SignUp(props) {
     label: "Contact Number",
     changeHandler: setContactNo,
     id: "contactNo",
+    pattern: "[0-9]{9}",
   });
 
   return (
@@ -159,8 +162,8 @@ function SignUp(props) {
         <Row className="content">
           <Col className="form-signup">
             <Form onSubmit={handleSubmit}>
+              <Modal.Title>Sign Up</Modal.Title>
               <Form.Text className="text-muted">
-                <h5>Step 1</h5>
                 <h6>Fill in this form to procced.</h6>
               </Form.Text>
 
