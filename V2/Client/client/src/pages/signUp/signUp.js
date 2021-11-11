@@ -254,7 +254,7 @@ function SignUp(props) {
                 />
               </Form.Group> */}
               {contactNumberInput}
-              {nofiy && (
+              {/* {nofiy && (
                 <Alert variant="success" hidden={!nofiy}>
                   {" "}
                   {nofiy}
@@ -265,7 +265,13 @@ function SignUp(props) {
                   {" "}
                   {errors}
                 </Alert>
-              )}
+              )} */}
+              <Alert variant="success" hidden={!nofiy}>
+                {!nofiy ? "nofiy" : nofiy}
+              </Alert>
+              <Alert variant="danger" hidden={!errors}>
+                {!errors ? "error" : errors}
+              </Alert>
 
               <div className="d-grid gap-2">
                 <Button
