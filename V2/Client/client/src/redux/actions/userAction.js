@@ -16,8 +16,25 @@ export const registerUser = (user_data, history) => async (dispatch) => {
 
   try {
     let result = await axios.post("/user/register", user_data);
-
     dispatch({ type: CLEAR_ERRORS, payload: result.data });
+    history.push("/user/register");
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response?.data,
+    });
+  }
+};
+
+/*Log user into the system*/
+export const loginUser = (user_data, history) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+
+  try {
+    let results = await axios.post("/user/login", user_data);
+    setAuthorizationHeader(results.data.token);
+    await dispatch(getUserData());
+    dispatch({ type: CLEAR_ERRORS });
     history.push("/");
   } catch (error) {
     dispatch({
@@ -25,6 +42,13 @@ export const registerUser = (user_data, history) => async (dispatch) => {
       payload: error.response?.data,
     });
   }
+};
+
+/*Log user out of the system*/
+export const logoutUser = () => (dispatch) => {
+  localStorage.removeItem("LenderToken");
+  delete axios.defaults.headers.common["Authorization"];
+  dispatch({ type: SET_UNAUTHENTICATED });
 };
 
 /*Get logged in user's details*/
@@ -40,4 +64,11 @@ export const getUserData = () => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+/*Set authorization header*/
+const setAuthorizationHeader = (token) => {
+  const LenderToken = `Bearer ${token}`;
+  localStorage.setItem("LenderToken", LenderToken);
+  axios.defaults.headers.common["Authorization"] = LenderToken;
 };

@@ -3,12 +3,14 @@ import {
   CLEAR_ERRORS,
   LOADING_UI,
   STOP_LOADING_UI,
+  SET_DASHBOARD,
 } from "../types";
 
 const initialState = {
   loading: false,
   errors: null,
   success: null,
+  dashboard: 0,
 };
 
 export default function (state = initialState, action) {
@@ -36,6 +38,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
+      };
+    case SET_DASHBOARD:
+      return {
+        ...state,
+        dashboard: action.payload,
       };
     default:
       return state;
