@@ -1,10 +1,22 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Nav, Container, Navbar, NavDropdown, Button } from "react-bootstrap";
 import { ImBooks } from "react-icons/im";
 import { IconContext } from "react-icons/lib";
 import "./navbar.scss";
+import PropTypes from "prop-types";
 
-function navbar() {
+import { connect } from "react-redux";
+import { logoutUser } from "../../redux/actions/userAction";
+
+function navbar(props) {
+  const {
+    authenticated,
+    user: { role },
+  } = props;
+
+  const handleLogout = () => {
+    props.logoutUser();
+  };
   return (
     <div>
       <IconContext.Provider value={{ color: "white", size: "30px" }}>
@@ -17,45 +29,71 @@ function navbar() {
         >
           <Container className="nav-container">
             <ImBooks className="logo-icon" />
-            <Navbar.Brand className="logo-name" href="/">
+            <Navbar.Brand className="logo-name" href="/welcome">
               Lend A Book
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className="me-auto">
-                <Nav.Link href="#features">Explore</Nav.Link>
-                <Nav.Link href="#pricing">Pricing</Nav.Link>
-                <NavDropdown title="About Us" id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Something
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
-                  </NavDropdown.Item>
-                </NavDropdown>
+              <Nav className="me-auto" bg="dark">
+                {!authenticated ? (
+                  <Nav.Link href="/Home">Explore</Nav.Link>
+                ) : (
+                  <Fragment>
+                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link href="#Books">Lend books</Nav.Link>
+                    <Nav.Link href="#Movies">Lend Movies</Nav.Link>
+                    {role === "admin" ? (
+                      <Nav.Link href="/Admin-dashboard">
+                        Admin Dashboard
+                      </Nav.Link>
+                    ) : (
+                      <Nav.Link href="#MyReservations">MyReservations</Nav.Link>
+                    )}
+                  </Fragment>
+                )}
               </Nav>
               <Nav>
-                <Button
-                  className="btn-login"
-                  variant="outline-light"
-                  size="lg"
-                  href="/login"
-                >
-                  Login
-                </Button>{" "}
-                <Button
-                  className="btn-signUp"
-                  variant="outline-light"
-                  size="lg"
-                  href="/register"
-                >
-                  SignUp
-                </Button>{" "}
+                {authenticated && (
+                  <Fragment>
+                    <Button
+                      className="btn-settings"
+                      variant="outline-light"
+                      size="lg"
+                      href="/settings"
+                    >
+                      settings
+                    </Button>{" "}
+                  </Fragment>
+                )}
+                {!authenticated ? (
+                  <Fragment>
+                    <Button
+                      className="btn-login"
+                      variant="outline-light"
+                      size="lg"
+                      href="/user/login"
+                    >
+                      Login
+                    </Button>{" "}
+                    <Button
+                      className="btn-signUp"
+                      variant="outline-light"
+                      size="lg"
+                      href="/user/register"
+                    >
+                      SignUp
+                    </Button>{" "}
+                  </Fragment>
+                ) : (
+                  <Button
+                    className="btn-signUp"
+                    variant="outline-light"
+                    size="lg"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Button>
+                )}
               </Nav>
             </Navbar.Collapse>
           </Container>
@@ -65,4 +103,15 @@ function navbar() {
   );
 }
 
-export default navbar;
+navbar.propTypes = {
+  user: PropTypes.object.isRequired,
+  authenticated: PropTypes.bool.isRequired,
+  logoutUser: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  authenticated: state.user.authenticated,
+  user: state.user,
+});
+
+export default connect(mapStateToProps, { logoutUser })(navbar);

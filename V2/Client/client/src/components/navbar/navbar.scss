@@ -1,6 +1,5 @@
 .nav {
   background: #125ae6;
-  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,6 +18,14 @@
   size: 35px;
 }
 
-.btn-login{
-    margin-right: 5px;
+.btn-login {
+  margin-right: 5px;
+}
+
+.btn-settings {
+  margin-right: 5px;
+}
+
+.btn-dashboard {
+  margin-right: 5px;
 }
