@@ -3,18 +3,16 @@ import { Container, Row, Col, Button, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import img from "../../assets/book-lover.svg";
 import "./landingPage.scss";
-import Navbar from "../../components/navbar/navbar";
 import Pricing from "../../components/pricing/priceChart";
 
 function Home() {
   return (
     <>
-      <Navbar />
       <Container className="container">
-        <Row className="row">
+        <Row className="banner">
           <Col className="col1">
             <h5 className="sub-title">Explore</h5>
-            <h2>Unlimited Books & Videos</h2>
+            <h2>Unlimited Books & Movies</h2>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -26,18 +24,20 @@ function Home() {
             <Image src={img} alt="books" className="booklover" />
           </Col>
         </Row>
-        <h3 className="about-title">About us</h3>
-        <p className="about-description">
-          Fringilla ut morbi tincidunt augue interdum velit euismod in
-          pellentesque. At risus viverra adipiscing at in tellus integer. Id
-          aliquet lectus proin nibh nisl condimentum id venenatis. Laoreet id
-          donec ultrices tincidunt. Bibendum at varius vel pharetra. Viverra
-          adipiscing at in tellus integer. Amet volutpat consequat mauris nunc
-          congue nisi vitae suscipit. Pretium viverra suspendisse potenti nullam
-          ac tortor. Et egestas quis ipsum suspendisse. Cursus in hac habitasse
-          platea dictumst quisque. Mi proin sed libero enim sed faucibus turpis
-          in eu.
-        </p>
+        <div className="box">
+          <h3 className="about-title">About us</h3>
+          <p className="about-description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris
+            commodo quis imperdiet massa tincidunt nunc pulvinar sapien. Magna
+            fermentum iaculis eu non. Suspendisse interdum consectetur libero id
+            faucibus nisl tincidunt eget. Adipiscing elit ut aliquam purus sit
+            amet. Odio facilisis mauris sit amet massa. Faucibus scelerisque
+            eleifend donec pretium vulputate sapien nec sagittis. Viverra nibh
+            cras pulvinar mattis nunc sed. In nibh mauris cursus mattis molestie
+            a iaculis. Scelerisque purus semper eget duis at tellus at.
+          </p>
+        </div>
       </Container>
 
       <Pricing />

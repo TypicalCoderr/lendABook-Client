@@ -162,7 +162,7 @@ function SignUp(props) {
         <Row className="content">
           <Col className="form-signup">
             <Form onSubmit={handleSubmit}>
-              <Modal.Title>Sign Up</Modal.Title>
+              <Modal.Title className="mb-2">Sign Up</Modal.Title>
               <Form.Text className="text-muted">
                 <h6>Fill in this form to procced.</h6>
               </Form.Text>

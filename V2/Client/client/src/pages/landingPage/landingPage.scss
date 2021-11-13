@@ -28,10 +28,11 @@
   vertical-align: middle;
 }
 
-.row {
+.banner {
   display: flex;
+  margin-top: 100px;
   margin-right: -15px;
-  margin-bottom: -15px;
+  margin-bottom: 100px;
   margin-left: -15px;
   flex-wrap: wrap;
   align-content: stretch;
@@ -42,13 +43,37 @@
 }
 
 .about-title {
-  margin-top: 200px;
   text-align: center;
   padding: 10px 10px 90px 10px;
 }
 
 .about-description {
   color: black;
+  margin-bottom: 70px;
+  text-align: center;
+}
+
+//img
+.top_image {
+  height: 520px;
+  width: 100%;
+  object-fit: cover;
+  background-image: url("../../assets/topbg.png");
+  box-shadow: -1px 166px 252px 63px rgba(0, 0, 0, 0.92) inset;
+  -webkit-box-shadow: -1px 166px 252px 63px rgba(0, 0, 0, 0.92) inset;
+  -moz-box-shadow: -1px 166px 252px 63px rgba(0, 0, 0, 0.92) inset;
+}
+
+.title {
+  color: white;
+  font-weight: bold;
+  font-size: 3rem;
+  margin-top: 60px;
+}
+
+.description {
+  text-align: center;
+  color: white;
   margin-bottom: 70px;
 }
 
