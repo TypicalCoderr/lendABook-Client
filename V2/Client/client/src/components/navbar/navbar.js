@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Nav, Container, Navbar, NavDropdown, Button } from "react-bootstrap";
+import { Nav, Container, Navbar, Button } from "react-bootstrap";
 import { ImBooks } from "react-icons/im";
 import { IconContext } from "react-icons/lib";
 import "./navbar.scss";
@@ -20,16 +20,10 @@ function navbar(props) {
   return (
     <div>
       <IconContext.Provider value={{ color: "white", size: "30px" }}>
-        <Navbar
-          collapseOnSelect
-          expand="lg"
-          bg="primary"
-          variant="dark"
-          className="nav"
-        >
+        <Navbar collapseOnSelect bg="primary" variant="dark" className="nav">
           <Container className="nav-container">
             <ImBooks className="logo-icon" />
-            <Navbar.Brand className="logo-name" href="/welcome">
+            <Navbar.Brand className="logo-name" href="/">
               Lend A Book
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
