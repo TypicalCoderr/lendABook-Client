@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 
 function Home(props) {
-  console.log(props);
+  // console.log(props);
   return (
     <div className="top_image">
       <Navbar />
