@@ -22,7 +22,7 @@ export const addBook = (book) => async (dispatch) => {
     dispatch({ type: CLEAR_ERRORS });
 
     //Prevent modal from closing after errors are displayed
-    if (results.data._id) return true;
+    if (results.data.ISBN) return true;
   } catch (error) {
     dispatch({
       type: SET_ERRORS,
@@ -52,7 +52,7 @@ export const getBook = (ISBN) => async (dispatch) => {
   try {
     dispatch({ type: LOADING_UI });
     let result = await axios.get(`/books/${ISBN}`);
-    dispatch({ type: SET_BOOK, payload: result.data });
+    dispatch({ type: SET_BOOK, payload: result.data.book });
     dispatch({ type: STOP_LOADING_UI });
   } catch (error) {
     dispatch({ type: SET_BOOK, payload: {} });
@@ -85,6 +85,59 @@ export const getAllUsers = () => async (dispatch) => {
     });
   } catch (error) {
     dispatch({ type: SET_USERS, payload: [] });
+    console.log(error);
+  }
+};
+
+/* Set verified */
+export const setVerified = (id) => async (dispatch) => {
+  try {
+    let result = await axios.get(`/user/set-verified/${id}`);
+    console.log(result);
+    dispatch(getAllUsers());
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/* Set blacklisted */
+export const setBlacklisted = (id) => async (dispatch) => {
+  try {
+    let result = await axios.get(`/user/set-blacklisted/${id}`);
+    console.log(result);
+    dispatch(getAllUsers());
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/* Upload book Image */
+export const uploadBookImage = (formData, ISBN) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  try {
+    await axios.post(`books/book-image/${ISBN}`, formData);
+    dispatch(getAllBooks());
+    dispatch(getBook(ISBN));
+    dispatch({ type: CLEAR_ERRORS });
+    dispatch({ type: STOP_LOADING_UI });
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: { error: { bookImage: error.response.data.error.message } },
+    });
+  }
+};
+
+/* Toggle availability of book */
+export const toggleBookAvailability = (ISBN) => async (dispatch) => {
+  //dispatch({ type: LOADING_UI });
+  try {
+    await axios.get(`books/book-availability/${ISBN}`);
+    dispatch(getAllBooks());
+    dispatch(getBook(ISBN));
+    dispatch({ type: CLEAR_ERRORS });
+    //dispatch({ type: STOP_LOADING_UI });
+  } catch (error) {
     console.log(error);
   }
 };
