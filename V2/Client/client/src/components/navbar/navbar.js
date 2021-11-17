@@ -20,7 +20,13 @@ function navbar(props) {
   return (
     <div>
       <IconContext.Provider value={{ color: "white", size: "30px" }}>
-        <Navbar collapseOnSelect bg="primary" variant="dark" className="nav">
+        <Navbar
+          collapseOnSelect
+          expand="lg"
+          bg="primary"
+          variant="dark"
+          className="nav"
+        >
           <Container className="nav-container">
             <ImBooks className="logo-icon" />
             <Navbar.Brand className="logo-name" href="/">
