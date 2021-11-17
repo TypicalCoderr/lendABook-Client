@@ -55,6 +55,7 @@ function ManageUsers(props) {
   let usersMarkup = _users.map((user) => (
     <UserCard key={user.id} user={user} />
   ));
+  console.log(props);
 
   let chunkedUsersMarkup = chunk(usersMarkup, 3);
 
@@ -104,7 +105,7 @@ function ManageUsers(props) {
 
   //When "Blacklisted" button is clicked
   const setBlacklisted = () => {
-    setCategory(3);
+    setCategory(2);
     const usersCopy = users.map((user) => user);
     const result = usersCopy.filter((item) => {
       return item.isBlacklisted;
@@ -148,15 +149,15 @@ function ManageUsers(props) {
                 className="search-user-button"
                 variant="outline-secondary"
                 active={category === 1}
-                // onClick={setNonVerified}
+                onClick={setNonVerified}
               >
                 Non-verified
               </Button>{" "}
               <Button
                 className="search-user-button"
                 variant="outline-danger"
-                active={category === 3}
-                // onClick={setBlacklisted}
+                active={category === 2}
+                onClick={setBlacklisted}
               >
                 Blacklisted
               </Button>{" "}

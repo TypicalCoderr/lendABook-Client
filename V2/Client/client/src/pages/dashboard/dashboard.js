@@ -12,6 +12,7 @@ import ViewUser from "../../components/manageUsers/viewUser";
 import "./dashboard.scss";
 
 import { connect } from "react-redux";
+import viewUser from "../../components/manageUsers/viewUser";
 
 const Dashboard = (props) => {
   const {
