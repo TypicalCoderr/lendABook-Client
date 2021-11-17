@@ -12,11 +12,11 @@ import { BOOK_CATRGORIES } from "../../util/consts";
 function AddBookModal(props) {
   const [ISBN, setISBN] = useState("");
   const [title, setTitle] = useState("");
-  // const [summary, setSummary] = useState("");
+  const [summary, setSummary] = useState("");
   const [category, setCategory] = useState(BOOK_CATRGORIES[0].id);
   const [author, setAuthor] = useState("");
   const [publisher, setPublisher] = useState("");
-  // const [ratings, setRatings] = useState("");
+  const [ratings, setRatings] = useState("");
   const [errors, setErrors] = useState({});
 
   //When errors are updated the component is re-rendered to display errors
@@ -36,6 +36,8 @@ function AddBookModal(props) {
       ISBN,
       publisher,
       category,
+      summary,
+      ratings,
     };
     //Add book to backend
     let result = await props.addBook(data);
@@ -131,7 +133,7 @@ function AddBookModal(props) {
             </Form.Row>
 
             <Form.Row>
-              <Form.Group as={Col}>
+              <Form.Group as={Col} md={9}>
                 <Form.Label> Category </Form.Label>
                 <Form.Control
                   as="select"
@@ -140,6 +142,27 @@ function AddBookModal(props) {
                 >
                   {categoryDropdownMarkup}
                 </Form.Control>
+              </Form.Group>
+              <Form.Group as={Col} md={3}>
+                <Form.Label> Rating </Form.Label>
+                <Form.Control
+                  type="number"
+                  value={ratings}
+                  onChange={(e) => setRatings(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+            </Form.Row>
+
+            <Form.Row>
+              <Form.Group as={Col}>
+                <Form.Label> Summary </Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  maxLength={50}
+                  value={summary}
+                  onChange={(e) => setSummary(e.target.value)}
+                ></Form.Control>
               </Form.Group>
             </Form.Row>
             <Button type="submit" style={{ marginTop: 20 }} disabled={loading}>

@@ -48,7 +48,7 @@ function ManageBooks(props) {
 
   //Function to create listof books cards from book list in state
   let booksMarkup = _books.map((book) => (
-    <BookCard key={book._id} book={book} />
+    <BookCard key={book.ISBN} book={book} />
   ));
 
   //Function to change displayed books when category is set
@@ -79,7 +79,7 @@ function ManageBooks(props) {
     const inputs = input.toLowerCase().split(" ");
 
     //Book ISBN, title and author will be searched through
-    const searchKeys = ["ISBN", "title", "author"];
+    const searchKeys = ["summary", "title", "author"];
     let booksArray = [];
 
     //If search criteria is null reset books to display all books
@@ -110,7 +110,7 @@ function ManageBooks(props) {
   const categoryDropdownMarkup = BOOK_CATRGORIES.map((category, index) => (
     <Dropdown.Item
       key={index}
-      onSelect={() => setValue("type", category.name, category.id)}
+      onSelect={() => setValue("category", category.name, category.id)}
     >
       {category.name}
     </Dropdown.Item>
@@ -182,7 +182,7 @@ function ManageBooks(props) {
                       </Dropdown.Item>
                       <Dropdown.Item
                         onSelect={() =>
-                          setValue("isAvailable", "Unavailable", false)
+                          setValue("isAvailable", "Reserved", false)
                         }
                       >
                         Unavailable

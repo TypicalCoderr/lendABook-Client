@@ -8,14 +8,14 @@ import { getBook } from "../../redux/actions/dataActions";
 import "./bookCard.scss";
 
 function BookCard(props) {
-  const { id, ISBN, isAvailable, bookCover, title } = props.book;
+  const { ISBN, isAvailable, bookCover, title , author} = props.book;
 
-  const handleSetBook = (id) => {
-    props.getBook(id);
+  const handleSetBook = (ISBN) => {
+    props.getBook(ISBN);
   };
 
   return (
-    <Card className="vehicle-card" onClick={() => handleSetBook(id)}>
+    <Card className="vehicle-card" onClick={() => handleSetBook(ISBN)}>
       <Image variant="top" src={bookCover} className="vehicle-card-image" />
       {/* <img src={bookCover}/> */}
       <Badge
@@ -23,19 +23,19 @@ function BookCard(props) {
         className="vehicle-card-badge"
         variant={isAvailable ? "success" : "danger"}
       >
-        {isAvailable ? "Available" : "Unavailable"}
+        {isAvailable ? "Available" : "Reservered"}
       </Badge>
       <Card.Body>
-        <Badge variant="secondary">Number</Badge>
-        <span>
-          {"	"}
-          {ISBN}
-        </span>
-        <br />
-        <Badge variant="secondary">Book</Badge>
+        <Badge variant="secondary">Title</Badge>
         <span>
           {"	"}
           {title}
+        </span>
+        <br />
+        <Badge variant="secondary">Author</Badge>
+        <span>
+          {"	"}
+          {author}
         </span>
       </Card.Body>
     </Card>
