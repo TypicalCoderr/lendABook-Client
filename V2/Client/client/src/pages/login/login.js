@@ -20,19 +20,22 @@ import { loginUser } from "../../redux/actions/userAction";
 function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState("");
+  const [errors, setErrors] = useState({});
 
+  //Destructure props
   const {
     UI: { loading },
   } = props;
 
+  //Update state with errors
   useEffect(() => {
-    props.UI.errors && setErrors(props.UI.errors.message);
+    props.UI.errors && setErrors(props.UI.errors.error);
   }, [props.UI.errors]);
 
-  const handleLogin = async (event) => {
+  //Method to handle form submission
+  const handleLogin = (event) => {
     event.preventDefault();
-    const data = { email, password };
+    const data = { email, password }; 
     props.loginUser(data, props.history);
   };
 
@@ -55,10 +58,14 @@ function Login(props) {
                 <Form.Control
                   type="email"
                   placeholder="Enter email"
+                  className={errors.email ? "form is-invalid" : "form"}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
+                <p className="error-text" hidden={!errors.email}>
+                  {errors.email}
+                </p>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -66,18 +73,22 @@ function Login(props) {
                 <Form.Control
                   type="password"
                   placeholder="Password"
+                  className={errors.password ? "form is-invalid" : "form"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
+                <p className="error-text" hidden={!errors.password}>
+                  {errors.password}
+                </p>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Text className="text-muted">forget password?</Form.Text>
               </Form.Group>
 
-              <Alert variant="danger" hidden={!errors}>
+              {/* <Alert variant="danger" hidden={!errors}>
                 {!errors ? "error" : errors}
-              </Alert>
+              </Alert> */}
               <div className="d-grid gap-2">
                 <Button
                   variant="outline-primary"
