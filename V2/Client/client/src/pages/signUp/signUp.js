@@ -24,13 +24,12 @@ function SignUp(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [age, setAge] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
   const [contactNo, setContactNo] = useState("");
-  const [errors, setErrors] = useState("");
+  const [errors, setErrors] = useState({});
   const [nofiy, setNotify] = useState("");
 
   const role = "customer";
-  const accountType = "not verified";
 
   //Alert
   const [show, setShow] = useState(true);
@@ -45,24 +44,37 @@ function SignUp(props) {
     changeHandler,
     id,
     pattern,
+    maxLength,
   }) => {
     const input = (
       <Form.Group controlId={id}>
         <Form.Label className="label"> {label} </Form.Label>
         <Form.Control
           type={type}
-          className={className}
+          className={errors[id] ? "form is-invalid" : "form"}
           placeholder={placeholder}
           value={value}
           onChange={(e) => changeHandler(e.target.value)}
           required
           name={id}
           pattern={pattern}
+          maxLength={maxLength}
         />
+        <p className="error-text" hidden={!errors[id]}>
+          {errors[id]}
+        </p>
       </Form.Group>
     );
     return input;
   };
+
+  useEffect(() => {
+    props.UI.errors && setErrors(props.UI.errors.error);
+  }, [props.UI.errors]);
+
+  useEffect(() => {
+    props.UI.success && setNotify(props.UI.success.message);
+  }, [props.UI.success]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -72,22 +84,13 @@ function SignUp(props) {
       email,
       password,
       confirmPassword,
-      age,
+      dateOfBirth,
       contactNo,
       role,
-      accountType,
     };
 
     props.registerUser(data, props.history);
   };
-
-  useEffect(() => {
-    props.UI.errors && setErrors(props.UI.errors.message);
-  }, [props.UI.errors]);
-
-  useEffect(() => {
-    props.UI.success && setNotify(props.UI.success.message);
-  }, [props.UI.success]);
 
   // Generate fields using function
   const firstNameInput = useInput({
@@ -135,24 +138,23 @@ function SignUp(props) {
     changeHandler: setConfirmPassword,
     id: "confirmPassword",
   });
-  const ageInput = useInput({
-    type: "number",
-    className: "mb-2",
-    placeholder: "21..",
-    value: age,
-    label: "Age",
-    changeHandler: setAge,
-    id: "age",
+  const dateOfBirthInput = useInput({
+    type: "date",
+    value: dateOfBirth,
+    label: "Date of birth",
+    changeHandler: setDateOfBirth,
+    id: "dateOfBirth",
   });
   const contactNumberInput = useInput({
-    type: "number",
+    type: "text",
     className: "mb-2",
     placeholder: "xxxxxxxxxx",
     value: contactNo,
     label: "Contact Number",
     changeHandler: setContactNo,
     id: "contactNo",
-    pattern: "[0-9]{9}",
+    pattern: "[0-9]{10}",
+    maxLength: "10",
   });
 
   return (
@@ -167,110 +169,25 @@ function SignUp(props) {
                 <h6>Fill in this form to procced.</h6>
               </Form.Text>
 
-              {/* <Form.Group>
-                <Form.Label htmlFor="inlineFormInput">First Name</Form.Label>
-                <Form.Control
-                  className="mb-2"
-                  id="firstName"
-                  placeholder="Jane"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-              </Form.Group> */}
               {firstNameInput}
 
-              {/* <Form.Group>
-                <Form.Label htmlFor="inlineFormInput">Last Name</Form.Label>
-                <Form.Control
-                  className="mb-2"
-                  id="lastName"
-                  placeholder="Doe"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              </Form.Group> */}
               {lastNameInput}
 
-              {/* <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="name@example.com"
-                  value={email}
-                  id="email"
-                  name="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Form.Group> */}
               {emailInput}
 
-              {/* <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </Form.Group> */}
               {passwordInput}
 
-              {/* <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-              </Form.Group> */}
               {confirmPasswordInput}
               <Form.Text id="passwordHelpBlock" muted>
                 password must be 8-20 characters long
               </Form.Text>
 
-              {/* <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Age</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="21.."
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                />
-              </Form.Group> */}
-              {ageInput}
+              {dateOfBirthInput}
 
-              {/* <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Phone Number</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="xxxxxxxxxx"
-                  value={contactNo}
-                  onChange={(e) => setContactNo(e.target.value)}
-                />
-              </Form.Group> */}
               {contactNumberInput}
-              {/* {nofiy && (
-                <Alert variant="success" hidden={!nofiy}>
-                  {" "}
-                  {nofiy}
-                </Alert>
-              )}
-              {!nofiy && (
-                <Alert variant="danger" hidden={!errors}>
-                  {" "}
-                  {errors}
-                </Alert>
-              )} */}
+
               <Alert variant="success" hidden={!nofiy}>
                 {!nofiy ? "nofiy" : nofiy}
-              </Alert>
-              <Alert variant="danger" hidden={!errors}>
-                {!errors ? "error" : errors}
               </Alert>
 
               <div className="d-grid gap-2">
@@ -279,7 +196,6 @@ function SignUp(props) {
                   type="submit"
                   size="lg"
                   className="btn-submit"
-                  // href="/img-upload"
                 >
                   Create Account
                 </Button>
