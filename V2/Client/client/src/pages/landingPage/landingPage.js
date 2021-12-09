@@ -24,7 +24,7 @@ function Home() {
             <Image src={img} alt="books" className="booklover" />
           </Col>
         </Row>
-        <div className="box">
+        <div className="box-1">
           <h3 className="about-title">About us</h3>
           <p className="about-description">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
