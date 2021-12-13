@@ -17,3 +17,10 @@ export const SET_USERS = "SET_USERS";
 export const LOADING_DATA = "LOADING_DATA";
 export const SET_BOOK = "SET_BOOK";
 export const SET_BOOKS = "SET_BOOKS";
+export const SET_DATES = "SET_DATES";
+
+
+//  CART REDUCER TYPES
+export const ADD_TO_LIST = "ADD_TO_LIST";
+export const REMOVE_FROM_LIST = "REMOVE_FROM_LIST";
+export const GET_TOTAL_BOOKS = "GET_TOTAL_BOOKS";
