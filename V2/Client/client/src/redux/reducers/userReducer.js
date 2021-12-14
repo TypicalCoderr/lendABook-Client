@@ -2,12 +2,14 @@ import {
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
   SET_USER,
+  SET_SUBSCRIPTION,
   LOADING_USER,
 } from "../types";
 
 const initialState = {
   authenticated: false,
   credentials: {},
+  subscription: [],
   loading: false,
 };
 
@@ -24,7 +26,12 @@ export default function (state = initialState, action) {
       return {
         authenticated: true,
         loading: false,
-        ...action.payload.loggedUser,
+        ...action.payload,
+      };
+    case SET_SUBSCRIPTION:
+      return {
+        ...state,
+        subscription: action.payload,
       };
     case LOADING_USER:
       return {

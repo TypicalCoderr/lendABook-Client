@@ -7,6 +7,8 @@ import {
   LOADING_UI,
   SET_UNAUTHENTICATED,
   LOADING_USER,
+  SET_SUBSCRIPTION,
+  SET_RESERVATION,
   STOP_LOADING_UI,
 } from "../types";
 
@@ -34,6 +36,7 @@ export const loginUser = (user_data, history) => async (dispatch) => {
     let results = await axios.post("/user/login", user_data);
     setAuthorizationHeader(results.data.token);
     await dispatch(getUserData());
+
     dispatch({ type: CLEAR_ERRORS });
     history.push("/");
   } catch (error) {
@@ -45,7 +48,7 @@ export const loginUser = (user_data, history) => async (dispatch) => {
 };
 
 /*Log user out of the system*/
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = (history) => (dispatch) => {
   localStorage.removeItem("LenderToken");
   delete axios.defaults.headers.common["Authorization"];
   dispatch({ type: SET_UNAUTHENTICATED });
@@ -58,6 +61,21 @@ export const getUserData = () => async (dispatch) => {
     let result = await axios.get("/user/LoggedUser");
     dispatch({
       type: SET_USER,
+      payload: result.data,
+    });
+    await dispatch(getUserSubscription());
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserSubscription = () => async (dispatch) => {
+  dispatch({ type: LOADING_USER });
+  try {
+    let result = await axios.get("/user/getSubscription");
+    dispatch({
+      type: SET_SUBSCRIPTION,
       payload: result.data,
     });
     return result.data;
