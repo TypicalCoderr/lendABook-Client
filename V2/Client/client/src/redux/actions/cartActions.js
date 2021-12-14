@@ -22,6 +22,6 @@ export const removeFromBookCart = (ISBN) => async (dispatch, getState) => {
     type: REMOVE_FROM_LIST,
     payload: ISBN,
   });
-
+  // console.log("id" + ISBN);
   localStorage.setItem("cart", JSON.stringify(getState().cart.cartItems));
 };
