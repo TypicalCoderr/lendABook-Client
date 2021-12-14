@@ -1,4 +1,4 @@
-import { ADD_TO_LIST, REMOVE_FROM_LIST } from "../types";
+import { ADD_TO_LIST, CLEAR_CART, REMOVE_FROM_LIST } from "../types";
 
 const initialState = {
   cartItems: [],
@@ -28,6 +28,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         cartItems: state.cartItems.filter((x) => x.ISBN !== action.payload),
+      };
+
+    case CLEAR_CART:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter((x) => x.books !== action.payload),
       };
 
     default:
