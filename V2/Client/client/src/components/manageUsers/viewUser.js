@@ -35,7 +35,7 @@ function ViewUser(props) {
   useEffect(() => {
     if (user) {
       setIsVerified(user.isVerified);
-      setBlacklisted(user.setBlacklisted);
+      setBlacklisted(user.isBlacklisted);
     }
   }, [user]);
 
@@ -106,7 +106,7 @@ function ViewUser(props) {
                 </ListGroup.Item>
                 <ListGroup.Item variant="light">
                   <Badge variant="secondary">Date of birth</Badge>
-                  <span> {user.age}</span>
+                  <span> {user.dateOfBirth}</span>
                 </ListGroup.Item>
                 <ListGroup.Item variant="light">
                   <Badge variant="secondary">Subsciption Type</Badge>
@@ -172,7 +172,7 @@ function ViewUser(props) {
       ) : (
         <Alert variant="warning"> No user selected</Alert>
       )}
-      ;
+      
     </Fragment>
   );
 }

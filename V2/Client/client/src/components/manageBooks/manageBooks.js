@@ -79,7 +79,7 @@ function ManageBooks(props) {
     const inputs = input.toLowerCase().split(" ");
 
     //Book ISBN, title and author will be searched through
-    const searchKeys = ["summary", "title", "author"];
+    const searchKeys = ["title", "author"];
     let booksArray = [];
 
     //If search criteria is null reset books to display all books
@@ -210,8 +210,11 @@ function ManageBooks(props) {
       </Card>
       <Row>
         <Col lg={4}>
-          <Card className="vehicle-card">
-            <Card.Img variant="top" />
+          <Card className="book-card">
+            <Card.Img
+              variant="top"
+              src="http://localhost:3001/books/default_book.png"
+            />
             <Card.Body>
               <Button
                 variant="info"

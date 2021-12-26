@@ -15,12 +15,12 @@ function BookCard(props) {
   };
 
   return (
-    <Card className="vehicle-card" onClick={() => handleSetBook(ISBN)}>
-      <Image variant="top" src={bookCover} className="vehicle-card-image" />
+    <Card className="book-card" onClick={() => handleSetBook(ISBN)}>
+      <Image variant="top" src={bookCover} className="book-card-image" />
       {/* <img src={bookCover}/> */}
       <Badge
         pill
-        className="vehicle-card-badge"
+        className="book-card-badge"
         variant={isAvailable ? "success" : "danger"}
       >
         {isAvailable ? "Available" : "Reservered"}
@@ -29,7 +29,7 @@ function BookCard(props) {
         <Badge variant="secondary">Title</Badge>
         <span>
           {"	"}
-          {title}
+          {title.substring(0, 25)}
         </span>
         <br />
         <Badge variant="secondary">Author</Badge>

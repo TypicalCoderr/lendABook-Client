@@ -1,29 +1,30 @@
-import React from "react";
-import { Alert, Button, Col, Container, Row } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Alert, Button, Col, Container, Row, Toast } from "react-bootstrap";
 
 import "./cartScreen.scss";
 
 import Navbar from "../../components/navbar/navbar";
 import CartItem from "../../components/bookCart/cartItem";
 
-import {
-  addToBookCart,
-  removeFromBookCart,
-} from "../../redux/actions/cartActions";
+import { removeFromBookCart } from "../../redux/actions/cartActions";
+import { makeReservation } from "../../redux/actions/dataActions";
 
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
+
+import { connect, useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 function CartScreen(props) {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const subscription = useSelector((state) => state.user.subscription);
+  const dates = useSelector((state) => state.data.dates);
+  const user = useSelector((state) => state.user);
   const { cartItems } = cart;
 
-  const books = [cartItems];
+  const [nofiy, setNotify] = useState("");
 
-  const handleCheckOut = () => {};
+  const books = { cartItems };
 
   const removeFromCartHandler = (ISBN) => {
     dispatch(removeFromBookCart(ISBN));
@@ -38,11 +39,35 @@ function CartScreen(props) {
     return cartItems.length;
   };
 
-  const getCartSubTotal = () => {
-    return cartItems
-      .reduce((price, item) => price + item.price * item.qty, 0)
-      .toFixed(2);
+  useEffect(() => {
+    props.UI.success && setNotify(props.UI.success.message);
+  }, [props.UI.success]);
+
+  // const getCartSubTotal = () => {
+  //   return cartItems
+  //     .reduce((price, item) => price + item.price * item.qty, 0)
+  //     .toFixed(2);
+  // };
+
+  const handleCheckOut = async (event) => {
+    event.preventDefault();
+    const data = {
+      reserve: dates.reserveDate,
+      returnDate: dates.returnDate,
+      charge: getTotal(),
+      userId: user.id,
+      books: books,
+    };
+    console.log(data);
+    //Make the rent
+    let result = await props.makeReservation(data, props.history);
   };
+
+  // const [show, setShow] = useState(false);
+
+  const [showA, setShowA] = useState(true);
+
+  const toggleShowA = () => setShowA(!showA, setNotify(""));
 
   return (
     <div className="top_image">
@@ -80,11 +105,40 @@ function CartScreen(props) {
         </p>
         <Alert variant="light" className="user-card" align="end"></Alert>
 
+        {
+          <Alert
+            variant="success"
+            align="center"
+            show={showA}
+            onClose={toggleShowA}
+            hidden={!nofiy}
+            dismissible
+          >
+            <Alert.Heading> {!nofiy ? "nofiy" : nofiy}</Alert.Heading>
+            <p>
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula,
+              eget lacinia odio sem nec elit. Cras mattis consectetur purus sit
+              amet fermentum.
+            </p>
+          </Alert>
+        }
+
+        {/* <Toast show={showA} onClose={toggleShowA}>
+          <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            />
+            <strong className="me-auto">Bootstrap</strong>
+          </Toast.Header>
+          <Toast.Body>{!nofiy ? "nofiy" : nofiy}</Toast.Body>
+        </Toast> */}
         {/*start of  cart */}
         <Row>
           <Col md={10}>
             {" "}
-            <h2>Book Cart</h2>
+            <h4>Book Cart</h4>
           </Col>
           <Col md={2}>
             <Link to="/lend-books">
@@ -104,7 +158,7 @@ function CartScreen(props) {
             ) : (
               cartItems.map((item) => (
                 <CartItem
-                  key={item.product}
+                  key={item.book}
                   item={item}
                   removeHandler={removeFromCartHandler}
                 />
@@ -114,8 +168,8 @@ function CartScreen(props) {
 
           <div className="cartscreen__right">
             <div className="cartscreen__info">
-              <p>Subtotal ({getCartCount()}) Books</p>
-              <p>Lend Charge: {getTotal()} LKR</p>
+              <p>Subtotal {getCartCount()} Books</p>
+              <p>Lend Charge: {getTotal() ? getTotal() : 0} LKR</p>
             </div>
             <div>
               <Button variant="dark" onClick={handleCheckOut}>
@@ -129,6 +183,17 @@ function CartScreen(props) {
   );
 }
 
-CartScreen.proTypes = {};
+// CartScreen.proTypes = {};
 
-export default CartScreen;
+CartScreen.propTypes = {
+  makeReservation: PropTypes.func.isRequired,
+  UI: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({ UI: state.UI });
+
+const mapActionsToProps = {
+  makeReservation,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(CartScreen);

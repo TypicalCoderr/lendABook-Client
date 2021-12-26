@@ -14,19 +14,29 @@ import {
 import ReserveNow from "../../components/reserve_now/reserve_now";
 import Navbar from "../../components/navbar/navbar";
 import Book from "../../components/book/book";
+import ReserveBookModal from "../../components/reserveBooks/reserveBookModal";
+
 import "./books.scss";
 
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { getBook } from "../../redux/actions/dataActions";
 
 import { BOOK_CATRGORIES } from "../../util/consts";
-import { PropTypes } from "prop-types";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 function Books(props) {
   const [_books, setBooks] = useState([]);
   const [bookPool, setBookPool] = useState([]);
   const [category, setCategory] = useState("Category");
   const [bookModalShow, setBookModalShow] = React.useState(false);
+
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+
+  const getCartCount = () => {
+    return cartItems.length;
+  };
 
   const {
     data: { books, loading },
@@ -43,7 +53,7 @@ function Books(props) {
     if (!props.isBlacklisted) {
       setBookModalShow(true);
     }
-    if (props.isVarified && !props.isBlacklisted) {
+    if (props.isVerified && !props.isBlacklisted) {
       props.getBook(ISBN);
     }
   };
@@ -165,7 +175,7 @@ function Books(props) {
         <ReserveNow history={props.history} />
 
         <Row className="book-search">
-          <Col md={5} style={{ paddingRight: 0 }}>
+          <Col md={4} style={{ paddingRight: 0, marginRight: -60 }}>
             <InputGroup>
               <InputGroup.Prepend>
                 <InputGroup.Text>
@@ -180,7 +190,8 @@ function Books(props) {
               />
             </InputGroup>
           </Col>
-          <Col md={4} style={{ paddingRight: 0 }}>
+
+          <Col md={4}>
             <Dropdown>
               <Dropdown.Toggle
                 variant="outline-secondary"
@@ -192,17 +203,34 @@ function Books(props) {
               <Dropdown.Menu>{categoryDropdownMarkup}</Dropdown.Menu>
             </Dropdown>
           </Col>
-          <Col md={3}>
+          <Col md={2} style={{ marginLeft: -120, marginRight: 160 }}>
             <Button
-              variant="outline-danger"
               onClick={handleReset}
-              style={{ width: "80%" }}
+              variant="outline-danger"
+              style={{ width: "70%" }}
             >
               <span>
                 <i className="fas fa-times reset-icon"></i>{" "}
               </span>
               Reset
             </Button>
+          </Col>
+          <Col md={2}>
+            <Link
+              variant="outline-primary"
+              style={{ width: "100%" }}
+              to="/cart"
+            >
+              <Button renderAs="button" variant="outline-primary">
+                <span>
+                  <i className="fas fa-cart-plus" aria-hidden="true">
+                    {" "}
+                  </i>{" "}
+                </span>
+                View Book Cart
+                <div className="item_count">{getCartCount()}</div>
+              </Button>
+            </Link>
           </Col>
         </Row>
         {!loading && (_books.length === 0 || Object.keys(_books).length === 0) && (
@@ -216,6 +244,12 @@ function Books(props) {
             <CardColumns style={{ marginTop: 20 }}>{chunk}</CardColumns>
           ))}
       </Container>
+      <ReserveBookModal
+        history={props.history}
+        isVerified={props.isVerified}
+        show={bookModalShow}
+        onHide={() => setBookModalShow(false)}
+      />
     </div>
   );
 }
@@ -223,6 +257,7 @@ function Books(props) {
 Books.propTypes = {
   getBook: PropTypes.func.isRequired,
   user: PropTypes.object,
+  subscription: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
@@ -235,6 +270,7 @@ const mapStateToProps = (state) => ({
   role: state.user.role,
   getBook: PropTypes.func.isRequired,
   books: state.data.books,
+  subscription: state.user.subscription,
 });
 
 const mapActionsToProps = {

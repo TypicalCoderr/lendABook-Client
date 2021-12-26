@@ -26,6 +26,7 @@ function SignUp(props) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [contactNo, setContactNo] = useState("");
+  const [subscriptionType, setSubscriptionType] = useState(1);
   const [errors, setErrors] = useState({});
   const [nofiy, setNotify] = useState("");
 
@@ -87,8 +88,9 @@ function SignUp(props) {
       dateOfBirth,
       contactNo,
       role,
+      subscriptionType,
     };
-
+    console.log(data);
     props.registerUser(data, props.history);
   };
 
@@ -185,6 +187,83 @@ function SignUp(props) {
               {dateOfBirthInput}
 
               {contactNumberInput}
+
+              <Form.Text id="passwordHelpBlock" muted>
+                select your subscrption package
+              </Form.Text>
+
+              <Row>
+                <Col md={3}>
+                  <div
+                    className="radio-btn"
+                    onClick={() => {
+                      setSubscriptionType(1);
+                    }}
+                  >
+                    <input
+                      type="radio"
+                      value={subscriptionType}
+                      name="subscriptionType"
+                      checked={subscriptionType == 1}
+                    />{" "}
+                    Bronze
+                  </div>
+                </Col>
+
+                <Col md={3}>
+                  {" "}
+                  <div
+                    className="radio-btn"
+                    onClick={() => {
+                      setSubscriptionType(2);
+                    }}
+                  >
+                    <input
+                      type="radio"
+                      value={subscriptionType}
+                      name="subscriptionType"
+                      checked={subscriptionType == 2}
+                    />{" "}
+                    Silver
+                  </div>
+                </Col>
+
+                <Col md={3}>
+                  {" "}
+                  <div
+                    className="radio-btn"
+                    onClick={() => {
+                      setSubscriptionType(3);
+                    }}
+                  >
+                    <input
+                      type="radio"
+                      value={subscriptionType}
+                      name="subscriptionType"
+                      checked={subscriptionType == 3}
+                    />{" "}
+                    Gold
+                  </div>
+                </Col>
+
+                <Col md={3}>
+                  {" "}
+                  <div
+                    className="radio-btn"
+                    onClick={() => {
+                      setSubscriptionType(4);
+                    }}
+                  >
+                    <input
+                      type="radio"
+                      value={subscriptionType}
+                      name="subscriptionType"
+                      checked={subscriptionType == 4}
+                    />{" "}
+                    Platinum
+                  </div>
+                </Col>
+              </Row>
 
               <Alert variant="success" hidden={!nofiy}>
                 {!nofiy ? "nofiy" : nofiy}

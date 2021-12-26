@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 
 import "./cartItem.scss";
 
-const CartItem = ({ item, qtyChangeHandler, removeHandler }) => {
+const CartItem = ({ item, removeHandler }) => {
   return (
     <Card className="cartitem" style={{ height: "150px" }}>
       <img
