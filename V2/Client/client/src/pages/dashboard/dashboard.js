@@ -5,14 +5,15 @@ import { Container, Row, Col } from "react-bootstrap";
 import Sidebar from "../../components/sideBar/sideNavbar";
 import ManageUsers from "../../components/manageUsers/manageUsers";
 import ManageBooks from "../../components/manageBooks/manageBooks";
+import ManageMovies from "../../components/manageMovies/manageMovies";
 import ViewBook from "../../components/manageBooks/viewBook";
+import ViewMovie from "../../components/manageMovies/viewMovie";
 import ViewUser from "../../components/manageUsers/viewUser";
 // import ManageReservation from "../../components/manageReservation/manageReservation";
 
 import "./dashboard.scss";
 
 import { connect } from "react-redux";
-import viewUser from "../../components/manageUsers/viewUser";
 
 const Dashboard = (props) => {
   const {
@@ -28,10 +29,12 @@ const Dashboard = (props) => {
           </Col>
           <>
             <Col xs={7} id="page-content-wrapper">
-              {dashboard === 0 ? <ManageUsers /> : <ManageBooks />}
+              {dashboard === 0 ? <ManageUsers /> : dashboard === 1 ?  <ManageBooks /> : <ManageMovies /> }    
+             
             </Col>
+           
             <Col xs={3} id="page-content-wrapper">
-              {dashboard === 0 ? <ViewUser /> : <ViewBook />}
+              {dashboard === 0 ? <ViewUser /> : dashboard === 1 ? <ViewBook /> : <ViewMovie /> }
             </Col>
           </>
         </Row>
