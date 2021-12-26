@@ -4,6 +4,9 @@ import {
   SET_SELECTED_USER,
   SET_BOOKS,
   SET_BOOK,
+  SET_DATES,
+  SET_MOVIES,
+  SET_MOVIE,
 } from "../types";
 
 const initialState = {
@@ -43,6 +46,23 @@ export default function (state = initialState, action) {
         ...state,
         book: action.payload,
       };
+    case SET_MOVIES:
+      return {
+        ...state,
+        movies: action.payload,
+        loading: false,
+      };
+    case SET_MOVIE:
+      return {
+        ...state,
+        movie: action.payload,
+      };
+    case SET_DATES:
+      return {
+        ...state,
+        dates: action.payload,
+      };
+
     default:
       return state;
   }

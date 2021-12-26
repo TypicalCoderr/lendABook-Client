@@ -3,6 +3,7 @@ export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
 export const SET_UNAUTHENTICATED = "SET_UNAUTHENTICATED";
 export const SET_USER = "SET_USER";
 export const LOADING_USER = "LOADING_USER";
+export const SET_SUBSCRIPTION = "SET_SUBSCRIPTION";
 
 /* UI REDUCER TYPES */
 export const SET_ERRORS = "SET_ERRORS";
@@ -17,10 +18,13 @@ export const SET_USERS = "SET_USERS";
 export const LOADING_DATA = "LOADING_DATA";
 export const SET_BOOK = "SET_BOOK";
 export const SET_BOOKS = "SET_BOOKS";
+export const SET_MOVIE = "SET_MOVIE";
+export const SET_MOVIES = "SET_MOVIES";
 export const SET_DATES = "SET_DATES";
-
+export const SET_RESERVATION = "SET_RESERVATION";
 
 //  CART REDUCER TYPES
 export const ADD_TO_LIST = "ADD_TO_LIST";
 export const REMOVE_FROM_LIST = "REMOVE_FROM_LIST";
 export const GET_TOTAL_BOOKS = "GET_TOTAL_BOOKS";
+export const CLEAR_CART = "CLEAR_CART";

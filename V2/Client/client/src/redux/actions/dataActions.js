@@ -1,4 +1,5 @@
 import axios from "axios";
+import dayjs from "dayjs";
 
 import {
   SET_USERS,
@@ -7,9 +8,14 @@ import {
   LOADING_UI,
   STOP_LOADING_UI,
   SET_BOOK,
+  SET_DATES,
   SET_BOOKS,
+  SET_MOVIE,
+  SET_MOVIES,
   SET_ERRORS,
+  SET_RESERVATION,
   CLEAR_ERRORS,
+  CLEAR_CART,
 } from "../types";
 
 /* Add a book */
@@ -47,7 +53,42 @@ export const getAllBooks = () => async (dispatch) => {
   }
 };
 
-/* Get single vehicle info */
+/* Add a movie */
+export const addMovie = (movie) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+
+  try {
+    let results = await axios.post("/movies/add-movie", movie);
+    await dispatch(getAllMovies());
+    dispatch({ type: CLEAR_ERRORS });
+
+    //Prevent modal from closing after errors are displayed
+    if (results.data.movieId) return true;
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data,
+    });
+  }
+};
+
+/* Get all movies */
+export const getAllMovies = () => async (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  try {
+    let results = await axios.get("/movies");
+    console.log(results);
+    dispatch({
+      type: SET_MOVIES,
+      payload: results.data.movies,
+    });
+  } catch (error) {
+    dispatch({ type: SET_MOVIES, payload: [] });
+    console.log(error);
+  }
+};
+
+/* Get single book info */
 export const getBook = (ISBN) => async (dispatch) => {
   try {
     dispatch({ type: LOADING_UI });
@@ -56,6 +97,19 @@ export const getBook = (ISBN) => async (dispatch) => {
     dispatch({ type: STOP_LOADING_UI });
   } catch (error) {
     dispatch({ type: SET_BOOK, payload: {} });
+    console.log(error);
+  }
+};
+
+/* Get single movie info */
+export const getMovie = (movieId) => async (dispatch) => {
+  try {
+    dispatch({ type: LOADING_UI });
+    let result = await axios.get(`/movies/${movieId}`);
+    dispatch({ type: SET_MOVIE, payload: result.data.movie });
+    dispatch({ type: STOP_LOADING_UI });
+  } catch (error) {
+    dispatch({ type: SET_MOVIE, payload: {} });
     console.log(error);
   }
 };
@@ -128,6 +182,24 @@ export const uploadBookImage = (formData, ISBN) => async (dispatch) => {
   }
 };
 
+/* Upload book Movie */
+export const uploadMovieImage = (formData, movieId) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  try {
+    console.log("sss" + movieId);
+    await axios.post(`movies/movie-image/${movieId}`, formData);
+    dispatch(getAllMovies());
+    dispatch(getMovie(movieId));
+    dispatch({ type: CLEAR_ERRORS });
+    dispatch({ type: STOP_LOADING_UI });
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: { error: { movieImage: error.response.data.error.message } },
+    });
+  }
+};
+
 /* Toggle availability of book */
 export const toggleBookAvailability = (ISBN) => async (dispatch) => {
   //dispatch({ type: LOADING_UI });
@@ -139,5 +211,119 @@ export const toggleBookAvailability = (ISBN) => async (dispatch) => {
     //dispatch({ type: STOP_LOADING_UI });
   } catch (error) {
     console.log(error);
+  }
+};
+
+/* Toggle availability of movie */
+export const toggleMovieAvailability = (movieId) => async (dispatch) => {
+  //dispatch({ type: LOADING_UI });
+  try {
+    await axios.get(`movies/movie-availability/${movieId}`);
+    dispatch(getAllMovies());
+    dispatch(getMovie(movieId));
+    dispatch({ type: CLEAR_ERRORS });
+    //dispatch({ type: STOP_LOADING_UI });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/* Set reserve and return date when finding books*/
+export const setDates = (dates, history) => async (dispatch) => {
+  //Validate pickup and dropoff times
+  const reserve = dayjs(`${dates.reserveDate}`, "YYY-MM-DD");
+  const returning = dayjs(`${dates.returnDate}`, "YYY-MM-DD");
+
+  const diff = returning.diff(reserve, "minutes");
+
+  console.log(reserve, returning, diff);
+
+  dispatch({
+    type: SET_BOOKS,
+    payload: {},
+  });
+
+  if (diff < 4320) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: { error: { message: "Minimum reserve period is 3 days" } },
+    });
+  } else if (diff > 20160) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: { error: { message: "Maximum reserve period is 2 weeks" } },
+    });
+  } else {
+    dates.diff = diff;
+    dispatch({ type: CLEAR_ERRORS });
+    dispatch({ type: SET_DATES, payload: dates });
+    dispatch({ type: LOADING_DATA });
+    history.push("/lend-books");
+    try {
+      let results = await axios.get(
+        `books/available-books/${dates.reserveDate}/${dates.returnDate}`
+      );
+      dispatch({
+        type: SET_BOOKS,
+        payload: results.data.books,
+      });
+    } catch (error) {
+      dispatch({ type: SET_BOOKS, payload: [] });
+      console.log(error);
+    }
+  }
+};
+
+export const makeReservation = (data, history) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  try {
+    let results = await axios.post(`/reserve/books`, data);
+    dispatch({ type: CLEAR_ERRORS, payload: results.data });
+    dispatch({ type: STOP_LOADING_UI });
+    localStorage.clear("cart");
+    dispatch({ type: CLEAR_CART });
+
+    //Prevent modal from closing after errors are displayed
+    // if (results.data._id) return true;
+  } catch (error) {
+    console.log(error.response.message);
+  }
+};
+
+/* Remove Book */
+export const removeBook = (ISBN) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  try {
+    let results = await axios.delete(`/books/${ISBN}`);
+    dispatch(getAllBooks());
+    dispatch({ type: SET_BOOK, payload: null });
+    dispatch({ type: CLEAR_ERRORS });
+
+    //Prevent modal from closing after errors are displayed
+    if (results.data.message === "Successfully deleted") return true;
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data,
+    });
+  }
+};
+
+/* Remove Movie */
+export const removeMovie = (movieId) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  try {
+    let results = await axios.delete(`/movies/${movieId}`);
+    dispatch(getAllMovies());
+    dispatch({ type: SET_MOVIE, payload: null });
+    dispatch({ type: CLEAR_ERRORS });
+
+    //Prevent modal from closing after errors are displayed
+    if (results.data.message === "Successfully deleted") return true;
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data,
+    });
   }
 };
