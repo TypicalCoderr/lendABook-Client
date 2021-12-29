@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+
+
 import { Container, Row, Col } from "react-bootstrap";
 import Sidebar from "../../components/sideBar/sideNavbar";
 import ManageUsers from "../../components/manageUsers/manageUsers";
@@ -9,6 +11,8 @@ import ManageMovies from "../../components/manageMovies/manageMovies";
 import ViewBook from "../../components/manageBooks/viewBook";
 import ViewMovie from "../../components/manageMovies/viewMovie";
 import ViewUser from "../../components/manageUsers/viewUser";
+import ManageBookReservation from "../../components/manageReservation/manageReservation";
+import ManageMovieReservation from "../../components/manageReservation/manageMovieReservation";
 // import ManageReservation from "../../components/manageReservation/manageReservation";
 
 import "./dashboard.scss";
@@ -27,16 +31,37 @@ const Dashboard = (props) => {
           <Col xs={2} id="sidebar-wrapper">
             <Sidebar />
           </Col>
-          <>
-            <Col xs={7} id="page-content-wrapper">
-              {dashboard === 0 ? <ManageUsers /> : dashboard === 1 ?  <ManageBooks /> : <ManageMovies /> }    
-             
+          {dashboard === 3 ? (
+            <Col xs={10} id="page-content-wrapper">
+              <ManageBookReservation />
             </Col>
-           
-            <Col xs={3} id="page-content-wrapper">
-              {dashboard === 0 ? <ViewUser /> : dashboard === 1 ? <ViewBook /> : <ViewMovie /> }
+          ) : dashboard === 4 ? (
+            <Col xs={10} id="page-content-wrapper">
+              <ManageMovieReservation />
             </Col>
-          </>
+          ) : (
+            <>
+              <Col xs={7} id="page-content-wrapper">
+                {dashboard === 0 ? (
+                  <ManageUsers />
+                ) : dashboard === 1 ? (
+                  <ManageBooks />
+                ) : (
+                  <ManageMovies />
+                )}
+              </Col>
+
+              <Col xs={3} id="page-content-wrapper">
+                {dashboard === 0 ? (
+                  <ViewUser />
+                ) : dashboard === 1 ? (
+                  <ViewBook />
+                ) : (
+                  <ViewMovie />
+                )}
+              </Col>
+            </>
+          )}
         </Row>
       </Container>
     </>
