@@ -84,9 +84,32 @@ export const getUserSubscription = () => async (dispatch) => {
   }
 };
 
+export const getUser = (UserId) => async (dispatch) => {
+  dispatch({ type: LOADING_USER });
+};
+
 /*Set authorization header*/
 const setAuthorizationHeader = (token) => {
   const LenderToken = `Bearer ${token}`;
   localStorage.setItem("LenderToken", LenderToken);
   axios.defaults.headers.common["Authorization"] = LenderToken;
+};
+
+/*Handle user image upload*/
+export const uploadUserImage = (formData) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  try {
+    console.log("sss" + formData);
+    await axios.post("/user/user-image", formData);
+    dispatch(getUserData());
+    dispatch({ type: CLEAR_ERRORS });
+    dispatch({ type: STOP_LOADING_UI });
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+
+      payload: { error: { userImage: error.response.data.error.message } },
+    });
+    console.log(error.response.data.error.message);
+  }
 };
