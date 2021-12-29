@@ -32,6 +32,11 @@ const SideNavbar = (props) => {
       id === "reservation-dashboard-icon"
     ) {
       props.setDashboard(3);
+    } else if (
+      id == "video-reservation-dashboard-button" ||
+      id == "video-reservation-dashboard-icon"
+    ) {
+      props.setDashboard(4);
     }
   };
 
@@ -92,7 +97,7 @@ const SideNavbar = (props) => {
           >
             <span id="movie-dashboard-icon" onClick={handleSetDashboard}>
               <i className="fas fa-film icon"></i>
-              movies
+              Videos
             </span>
           </Button>
         </Nav.Item>
@@ -107,8 +112,29 @@ const SideNavbar = (props) => {
             onClick={handleSetDashboard}
           >
             <span id="reservation-dashboard-icon" onClick={handleSetDashboard}>
-              <i className="fas fa-file-invoice-dollar icon"></i>
-              Reservations
+              {/* <i className="fas fa-file-invoice-dollar icon"></i> */}
+              <i className="fas fa-money-check-alt icon"></i>
+              Reservations / Books
+            </span>
+          </Button>
+        </Nav.Item>
+
+        <Nav.Item className="sidebar-item">
+          <Button
+            variant="primary"
+            className={`sidebar-button ${
+              dashboard === 4 && "sidebar-button-active"
+            }`}
+            size="lg"
+            id="video-reservation-dashboard-button"
+            onClick={handleSetDashboard}
+          >
+            <span
+              id="video-reservation-dashboard-icon"
+              onClick={handleSetDashboard}
+            >
+              <i className="fas fa-money-check-alt icon"></i>
+              Reservations / Videos
             </span>
           </Button>
         </Nav.Item>
@@ -126,7 +152,7 @@ const SideNavbar = (props) => {
             </span>
           </Button>
         </Nav.Item>
-        <p className="sidebar-item-footer">Administrator Dashboard</p>
+        <p className="sidebar-item-footer">Administrator Dashboard </p>
       </Nav>
     </div>
   );
