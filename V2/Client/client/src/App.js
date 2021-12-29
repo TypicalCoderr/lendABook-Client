@@ -12,6 +12,9 @@ import { logoutUser, getUserData } from "./redux/actions/userAction";
 
 //utils
 import AuthRoute from "./util/authRoute";
+import AuthRouteAdmin from "./util/authRouteAdmin";
+import AuthRouteAll from "./util/authRouteAll";
+import AuthRouteUser from "./util/authRouteUser";
 
 import Landing from "./pages/landingPage/landingPage";
 import Login from "./pages/login/login";
@@ -20,6 +23,12 @@ import UserImgUpload from "./pages/signUp/imageForm";
 import Home from "./pages/home/home";
 import Books from "./pages/books/books";
 import Dashboard from "./pages/dashboard/dashboard";
+import CartScreen from "./pages/cartScreen/cartScreen";
+import MovieCartScreen from "./pages/cartScreen/movieCartScreen";
+import Success from "./pages/success/success";
+import Movies from "./pages/movies/movies";
+import MyBookReservations from "./pages/myReservations/myBookReservations";
+import MyMovieReservations from "./pages/myReservations/myMovieReservations";
 
 axios.defaults.baseURL = "http://localhost:3001";
 
@@ -44,13 +53,38 @@ function App() {
         <Provider store={store}>
           <Router>
             <Switch>
-              <Route exact path="/welcome" component={Landing} />
+              {/* <Route exact path="/welcome" component={Landing} /> */}
               <AuthRoute exact path="/user/login" component={Login} />
-              <Route exact path="/user/register" component={Signup} />
-              <Route exact path="/uploadImage" component={UserImgUpload} />
+              <AuthRoute exact path="/user/register" component={Signup} />
+              <AuthRouteAll
+                exact
+                path="/uploadImage"
+                component={UserImgUpload}
+              />
               <Route exact path="/" component={Home} />
               <Route exact path="/lend-books" component={Books} />
-              <Route exact path="/Admin-dashboard" component={Dashboard} />
+              <Route exact path="/lend-videos" component={Movies} />
+              <AuthRouteUser exact path="/cart-books" component={CartScreen} />
+              <AuthRouteUser
+                exact
+                path="/cart-movies"
+                component={MovieCartScreen}
+              />
+              <AuthRouteUser
+                exact
+                path="/myReservations-books"
+                component={MyBookReservations}
+              />
+              <AuthRouteUser
+                exact
+                path="/myReservations-movies"
+                component={MyMovieReservations}
+              />
+              <AuthRouteAdmin
+                exact
+                path="/Admin-dashboard"
+                component={Dashboard}
+              />
             </Switch>
           </Router>
         </Provider>
