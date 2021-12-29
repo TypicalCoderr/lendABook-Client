@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Nav, Container, Navbar, Button } from "react-bootstrap";
+import { Nav, Container, Navbar, Button, NavDropdown } from "react-bootstrap";
 import { ImBooks } from "react-icons/im";
 import { IconContext } from "react-icons/lib";
 import "./navbar.scss";
@@ -36,18 +36,37 @@ function navbar(props) {
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto" bg="dark">
                 {!authenticated ? (
-                  <Nav.Link href="/Home">Explore</Nav.Link>
+                  <Fragment>
+                    <Nav.Link href="/lend-books">Books</Nav.Link>
+                    <Nav.Link href="/lend-videos">Videos</Nav.Link>
+                  </Fragment>
                 ) : (
                   <Fragment>
                     <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="#Books">Lend books</Nav.Link>
-                    <Nav.Link href="#Movies">Lend Movies</Nav.Link>
+                    {role === "customer" && (
+                      <Fragment>
+                        <Nav.Link href="/lend-books">Lend books</Nav.Link>
+                        <Nav.Link href="/lend-videos">Lend Videos</Nav.Link>
+                      </Fragment>
+                    )}
+                    {/* <Nav.Link href="/lend-books">Lend books</Nav.Link>
+                    <Nav.Link href="/lend-videos">Lend Videos</Nav.Link> */}
                     {role === "admin" ? (
                       <Nav.Link href="/Admin-dashboard">
                         Admin Dashboard
                       </Nav.Link>
                     ) : (
-                      <Nav.Link href="#MyReservations">MyReservations</Nav.Link>
+                      <NavDropdown
+                        title="myReservations"
+                        id="basic-nav-dropdown"
+                      >
+                        <NavDropdown.Item href="/myReservations-books">
+                          Books
+                        </NavDropdown.Item>
+                        <NavDropdown.Item href="/myReservations-movies">
+                          Movies
+                        </NavDropdown.Item>
+                      </NavDropdown>
                     )}
                   </Fragment>
                 )}
@@ -59,7 +78,7 @@ function navbar(props) {
                       className="btn-settings"
                       variant="outline-light"
                       size="lg"
-                      href="/settings"
+                      href="/uploadImage"
                     >
                       settings
                     </Button>{" "}
