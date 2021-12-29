@@ -16,6 +16,7 @@ import {
   SET_RESERVATION,
   CLEAR_ERRORS,
   CLEAR_CART,
+  SET_RESERVATIONS,
 } from "../types";
 
 /* Add a book */
@@ -117,6 +118,7 @@ export const getMovie = (movieId) => async (dispatch) => {
 /* Get single user info */
 export const getUser = (id) => async (dispatch) => {
   try {
+    console.log("hello");
     dispatch({ type: LOADING_UI });
     let result = await axios.get(`/user/${id}`);
     dispatch({ type: SET_SELECTED_USER, payload: result.data });
@@ -274,10 +276,72 @@ export const setDates = (dates, history) => async (dispatch) => {
   }
 };
 
+/* Set reserve and return date when finding books*/
+export const setMovieDates = (dates, history) => async (dispatch) => {
+  //Validate pickup and dropoff times
+  const reserve = dayjs(`${dates.reserveDate}`, "YYY-MM-DD");
+  const returning = dayjs(`${dates.returnDate}`, "YYY-MM-DD");
+
+  const diff = returning.diff(reserve, "minutes");
+
+  console.log(reserve, returning, diff);
+
+  dispatch({
+    type: SET_MOVIES,
+    payload: {},
+  });
+
+  if (diff < 4320) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: { error: { message: "Minimum reserve period is 3 days" } },
+    });
+  } else if (diff > 20160) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: { error: { message: "Maximum reserve period is 2 weeks" } },
+    });
+  } else {
+    dates.diff = diff;
+    dispatch({ type: CLEAR_ERRORS });
+    dispatch({ type: SET_DATES, payload: dates });
+    dispatch({ type: LOADING_DATA });
+    history.push("/lend-videos");
+    try {
+      let results = await axios.get(
+        `movies/available-movies/${dates.reserveDate}/${dates.returnDate}`
+      );
+      dispatch({
+        type: SET_MOVIES,
+        payload: results.data.movies,
+      });
+    } catch (error) {
+      dispatch({ type: SET_MOVIES, payload: [] });
+      console.log(error);
+    }
+  }
+};
+
 export const makeReservation = (data, history) => async (dispatch) => {
   dispatch({ type: LOADING_UI });
   try {
     let results = await axios.post(`/reserve/books`, data);
+    dispatch({ type: CLEAR_ERRORS, payload: results.data });
+    dispatch({ type: STOP_LOADING_UI });
+    localStorage.clear("cart");
+    dispatch({ type: CLEAR_CART });
+
+    //Prevent modal from closing after errors are displayed
+    // if (results.data._id) return true;
+  } catch (error) {
+    console.log(error.response.message);
+  }
+};
+
+export const makeMovieReservation = (data, history) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  try {
+    let results = await axios.post(`/reserve/movies`, data);
     dispatch({ type: CLEAR_ERRORS, payload: results.data });
     dispatch({ type: STOP_LOADING_UI });
     localStorage.clear("cart");
@@ -325,5 +389,90 @@ export const removeMovie = (movieId) => async (dispatch) => {
       type: SET_ERRORS,
       payload: error.response.data,
     });
+  }
+};
+
+/* Get all bookreservations */
+export const getAllBookReservations = () => async (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  try {
+    let results = await axios.get("/reserve/allBookReservations");
+    dispatch({
+      type: SET_RESERVATIONS,
+      payload: results.data.reservations,
+    });
+    console.log("ss" + results.data.reservations);
+  } catch (error) {
+    dispatch({ type: SET_RESERVATIONS, payload: [] });
+    console.log(error);
+  }
+};
+
+/* Get all bookreservations */
+export const getAllMovieReservations = () => async (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  try {
+    let results = await axios.get("/reserve/allMovieReservations");
+    dispatch({
+      type: SET_RESERVATIONS,
+      payload: results.data.reservations,
+    });
+    console.log("ss" + results.data.reservations);
+  } catch (error) {
+    dispatch({ type: SET_RESERVATIONS, payload: [] });
+    console.log(error);
+  }
+};
+
+/* Change book reservation status */
+export const changeBookReservationStatus = (id, status) => async (dispatch) => {
+  try {
+    await axios.post(`/reserve/bookReservation-status/${id}`, { status });
+    dispatch(getAllBookReservations());
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/* Change book reservation status */
+export const changeMovieReservationStatus =
+  (id, status) => async (dispatch) => {
+    try {
+      await axios.post(`/reserve/movieReservation-status/${id}`, { status });
+      dispatch(getAllMovieReservations());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+/* Get Bookreservations of logged in user */
+export const getMyBookReservations = () => async (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  try {
+    let results = await axios.get("/reserve/my-bookReservations");
+    console.log(results.data);
+    dispatch({
+      type: SET_RESERVATIONS,
+      payload: results.data.reservations,
+    });
+  } catch (error) {
+    dispatch({ type: SET_RESERVATIONS, payload: [] });
+    console.log(error);
+  }
+};
+
+/* Get moviereservations of logged in user */
+export const getMyMovieReservations = () => async (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  try {
+    let results = await axios.get("/reserve/my-movieReservations");
+    console.log(results.data);
+    dispatch({
+      type: SET_RESERVATIONS,
+      payload: results.data.reservations,
+    });
+  } catch (error) {
+    dispatch({ type: SET_RESERVATIONS, payload: [] });
+    console.log(error);
   }
 };
