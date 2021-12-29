@@ -1,4 +1,11 @@
-import { ADD_TO_LIST, CLEAR_CART, REMOVE_FROM_LIST } from "../types";
+import {
+  ADD_TO_LIST,
+  ADD_TO_MOVIE_LIST,
+  CLEAR_CART,
+  CLEAR_MOVIE_CART,
+  REMOVE_FROM_LIST,
+  REMOVE_FROM_MOVIE_LIST,
+} from "../types";
 
 const initialState = {
   cartItems: [],
@@ -31,9 +38,30 @@ export default function (state = initialState, action) {
       };
 
     case CLEAR_CART:
+      return initialState;
+    case ADD_TO_MOVIE_LIST:
+      const Movieitem = action.payload;
+
+      const existMovieItem = state.cartItems.find(
+        (x) => x.movieId === Movieitem.movieId
+      );
+      if (existMovieItem) {
+        return {
+          ...state,
+          cartItems: state.cartItems.map((x) =>
+            x.movieId === existMovieItem.movieId ? Movieitem : x
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          cartItems: [...state.cartItems, Movieitem],
+        };
+      }
+    case REMOVE_FROM_MOVIE_LIST:
       return {
         ...state,
-        cartItems: state.cartItems.filter((x) => x.books !== action.payload),
+        cartItems: state.cartItems.filter((x) => x.movieId !== action.payload),
       };
 
     default:
