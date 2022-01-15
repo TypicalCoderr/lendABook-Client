@@ -37,6 +37,16 @@ const SideNavbar = (props) => {
       id == "video-reservation-dashboard-icon"
     ) {
       props.setDashboard(4);
+    } else if (
+      id == "book-prices-dashboard-button" ||
+      id == "book-prices-dashboard-button-icon"
+    ) {
+      props.setDashboard(5);
+    } else if (
+      id == "video-prices-dashboard-button" ||
+      id == "video-prices-dashboard-button-icon"
+    ) {
+      props.setDashboard(6);
     }
   };
 
@@ -135,6 +145,46 @@ const SideNavbar = (props) => {
             >
               <i className="fas fa-money-check-alt icon"></i>
               Reservations / Videos
+            </span>
+          </Button>
+        </Nav.Item>
+
+        <Nav.Item className="sidebar-item">
+          <Button
+            variant="primary"
+            className={`sidebar-button ${
+              dashboard === 5 && "sidebar-button-active"
+            }`}
+            size="lg"
+            id="book-prices-dashboard-button"
+            onClick={handleSetDashboard}
+          >
+            <span
+              id="book-prices-dashboard-button-icon"
+              onClick={handleSetDashboard}
+            >
+              <i class="fas fa-dollar-sign icon"></i>
+              Comp. Prices / Books
+            </span>
+          </Button>
+        </Nav.Item>
+
+        <Nav.Item className="sidebar-item">
+          <Button
+            variant="primary"
+            className={`sidebar-button ${
+              dashboard === 6 && "sidebar-button-active"
+            }`}
+            size="lg"
+            id="video-prices-dashboard-button"
+            onClick={handleSetDashboard}
+          >
+            <span
+              id="video-prices-dashboard-button-icon"
+              onClick={handleSetDashboard}
+            >
+              <i class="fas fa-dollar-sign icon"></i>
+              Comp. Prices / Videos
             </span>
           </Button>
         </Nav.Item>
