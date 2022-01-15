@@ -7,6 +7,9 @@ import {
   SET_DATES,
   SET_MOVIES,
   SET_MOVIE,
+  SET_BOOK_PRICES,
+  SET_MOVIE_PRICES,
+  SET_RESERVATIONS,
 } from "../types";
 
 const initialState = {
@@ -14,6 +17,8 @@ const initialState = {
   books: [],
   movies: [],
   reservations: [],
+  bookPrices: [],
+  videoPrices: [],
   loading: false,
 };
 
@@ -61,6 +66,25 @@ export default function (state = initialState, action) {
       return {
         ...state,
         dates: action.payload,
+      };
+    case SET_RESERVATIONS:
+      return {
+        ...state,
+        reservations: action.payload,
+        user: action.payload.reservations,
+        loading: false,
+      };
+    case SET_BOOK_PRICES:
+      return {
+        ...state,
+        bookPrices: action.payload,
+        loading: false,
+      };
+    case SET_MOVIE_PRICES:
+      return {
+        ...state,
+        videoPrices: action.payload,
+        loading: false,
       };
 
     default:

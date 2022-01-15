@@ -23,6 +23,8 @@ export const SET_MOVIES = "SET_MOVIES";
 export const SET_DATES = "SET_DATES";
 export const SET_RESERVATION = "SET_RESERVATION";
 export const SET_RESERVATIONS = "SET_RESERVATIONS";
+export const SET_BOOK_PRICES = "SET_BOOK_PRICES";
+export const SET_MOVIE_PRICES = "SET_MOVIE_PRICES";
 
 //  CART REDUCER TYPES
 export const ADD_TO_LIST = "ADD_TO_LIST";

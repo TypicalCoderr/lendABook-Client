@@ -14,6 +14,8 @@ import {
   SET_MOVIES,
   SET_ERRORS,
   SET_RESERVATION,
+  SET_BOOK_PRICES,
+  SET_MOVIE_PRICES,
   CLEAR_ERRORS,
   CLEAR_CART,
   SET_RESERVATIONS,
@@ -131,6 +133,7 @@ export const getUser = (id) => async (dispatch) => {
 
 /* Get all users */
 export const getAllUsers = () => async (dispatch) => {
+
   dispatch({ type: LOADING_DATA });
   try {
     let results = await axios.get("/user");
@@ -231,7 +234,7 @@ export const toggleMovieAvailability = (movieId) => async (dispatch) => {
 };
 
 /* Set reserve and return date when finding books*/
-export const setDates = (dates, history) => async (dispatch) => {
+export const setDates = (dates, history) => async (dispatch, getState) => {
   //Validate pickup and dropoff times
   const reserve = dayjs(`${dates.reserveDate}`, "YYY-MM-DD");
   const returning = dayjs(`${dates.returnDate}`, "YYY-MM-DD");
@@ -245,15 +248,24 @@ export const setDates = (dates, history) => async (dispatch) => {
     payload: {},
   });
 
+  let max =
+    getState() &&
+    getState().user &&
+    getState().user.subscription &&
+    getState().user.subscription.duration_books;
+
+  let d = Math.floor(max / (60 * 24 * 7));
+  const weeks = d > 0 ? d + (d == 1 ? " week " : " weeks ") : "";
+
   if (diff < 4320) {
     dispatch({
       type: SET_ERRORS,
       payload: { error: { message: "Minimum reserve period is 3 days" } },
     });
-  } else if (diff > 20160) {
+  } else if (diff > max) {
     dispatch({
       type: SET_ERRORS,
-      payload: { error: { message: "Maximum reserve period is 2 weeks" } },
+      payload: { error: { message: "Maximum reserve period is " + weeks } },
     });
   } else {
     dates.diff = diff;
@@ -265,6 +277,7 @@ export const setDates = (dates, history) => async (dispatch) => {
       let results = await axios.get(
         `books/available-books/${dates.reserveDate}/${dates.returnDate}`
       );
+      // console.log("sss" + max);
       dispatch({
         type: SET_BOOKS,
         payload: results.data.books,
@@ -277,7 +290,7 @@ export const setDates = (dates, history) => async (dispatch) => {
 };
 
 /* Set reserve and return date when finding books*/
-export const setMovieDates = (dates, history) => async (dispatch) => {
+export const setMovieDates = (dates, history) => async (dispatch, getState) => {
   //Validate pickup and dropoff times
   const reserve = dayjs(`${dates.reserveDate}`, "YYY-MM-DD");
   const returning = dayjs(`${dates.returnDate}`, "YYY-MM-DD");
@@ -291,15 +304,24 @@ export const setMovieDates = (dates, history) => async (dispatch) => {
     payload: {},
   });
 
+  let max =
+    getState() &&
+    getState().user &&
+    getState().user.subscription &&
+    getState().user.subscription.duration_videos;
+
+  let d = Math.floor(max / (60 * 24));
+  const days = d > 0 ? d + (d == 1 ? " day " : " days ") : "";
+
   if (diff < 4320) {
     dispatch({
       type: SET_ERRORS,
       payload: { error: { message: "Minimum reserve period is 3 days" } },
     });
-  } else if (diff > 20160) {
+  } else if (diff > max) {
     dispatch({
       type: SET_ERRORS,
-      payload: { error: { message: "Maximum reserve period is 2 weeks" } },
+      payload: { error: { message: "Maximum reserve period is " + days } },
     });
   } else {
     dates.diff = diff;
@@ -328,7 +350,6 @@ export const makeReservation = (data, history) => async (dispatch) => {
     let results = await axios.post(`/reserve/books`, data);
     dispatch({ type: CLEAR_ERRORS, payload: results.data });
     dispatch({ type: STOP_LOADING_UI });
-    localStorage.clear("cart");
     dispatch({ type: CLEAR_CART });
 
     //Prevent modal from closing after errors are displayed
@@ -344,7 +365,6 @@ export const makeMovieReservation = (data, history) => async (dispatch) => {
     let results = await axios.post(`/reserve/movies`, data);
     dispatch({ type: CLEAR_ERRORS, payload: results.data });
     dispatch({ type: STOP_LOADING_UI });
-    localStorage.clear("cart");
     dispatch({ type: CLEAR_CART });
 
     //Prevent modal from closing after errors are displayed
@@ -473,6 +493,38 @@ export const getMyMovieReservations = () => async (dispatch) => {
     });
   } catch (error) {
     dispatch({ type: SET_RESERVATIONS, payload: [] });
+    console.log(error);
+  }
+};
+
+/* Get all competitive book prices */
+export const getBookPrices = () => async (dispatch) => {
+ 
+  dispatch({ type: LOADING_DATA });
+  try {
+    let results = await axios.get("/getBookPrices");
+    dispatch({
+      type: SET_BOOK_PRICES,
+      payload: results.data.bookPrices,
+    });
+  } catch (error) {
+    dispatch({ type: SET_BOOK_PRICES, payload: [] });
+    console.log(error);
+  }
+};
+
+/* Get all competitive movie prices */
+export const getMoviePrices = () => async (dispatch) => {
+ 
+  dispatch({ type: LOADING_DATA });
+  try {
+    let results = await axios.get("/getMoviePrices");
+    dispatch({
+      type: SET_MOVIE_PRICES,
+      payload: results.data.videoPrices,
+    });
+  } catch (error) {
+    dispatch({ type: SET_MOVIE_PRICES, payload: [] });
     console.log(error);
   }
 };

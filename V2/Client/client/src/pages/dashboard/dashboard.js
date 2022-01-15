@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-
-
 import { Container, Row, Col } from "react-bootstrap";
 import Sidebar from "../../components/sideBar/sideNavbar";
 import ManageUsers from "../../components/manageUsers/manageUsers";
@@ -13,6 +11,8 @@ import ViewMovie from "../../components/manageMovies/viewMovie";
 import ViewUser from "../../components/manageUsers/viewUser";
 import ManageBookReservation from "../../components/manageReservation/manageReservation";
 import ManageMovieReservation from "../../components/manageReservation/manageMovieReservation";
+import BookPrices from "../../components/bookPrices/bookPrices";
+import MoviePrices from "../../components/moviePrices/moviePrices";
 // import ManageReservation from "../../components/manageReservation/manageReservation";
 
 import "./dashboard.scss";
@@ -38,6 +38,14 @@ const Dashboard = (props) => {
           ) : dashboard === 4 ? (
             <Col xs={10} id="page-content-wrapper">
               <ManageMovieReservation />
+            </Col>
+          ) : dashboard === 5 ? (
+            <Col xs={10} id="page-content-wrapper">
+              <BookPrices />
+            </Col>
+          ) : dashboard === 6 ? (
+            <Col xs={10} id="page-content-wrapper">
+              <MoviePrices />
             </Col>
           ) : (
             <>
