@@ -108,10 +108,10 @@ function ViewUser(props) {
                   <Badge variant="secondary">Date of birth</Badge>
                   <span> {user.dateOfBirth}</span>
                 </ListGroup.Item>
-                <ListGroup.Item variant="light">
+                {/* <ListGroup.Item variant="light">
                   <Badge variant="secondary">Subsciption Type</Badge>
-                  <span> {user.accountType}</span>
-                </ListGroup.Item>
+                  <span> {user.subscription && user.subscription.}</span>
+                </ListGroup.Item> */}
               </ListGroup>
 
               <ButtonGroup vertical className="view-user-image-options">
@@ -172,7 +172,6 @@ function ViewUser(props) {
       ) : (
         <Alert variant="warning"> No user selected</Alert>
       )}
-      
     </Fragment>
   );
 }

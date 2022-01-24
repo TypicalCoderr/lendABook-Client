@@ -6,9 +6,10 @@ import Info from "../landingPage/landingPage";
 
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Footer from "../../components/footer/footer";
 
 function Home(props) {
-  // console.log(props);
+
   return (
     <div className="top_image">
       <Navbar />
@@ -16,7 +17,8 @@ function Home(props) {
         <Alert
           variant="danger"
           className="not-verified-message"
-          hidden={
+          hidden = 
+          {
             !props.authenticated ||
             props.role === "admin" ||
             (props.userImageURL && props.isVerified) ||
@@ -36,7 +38,7 @@ function Home(props) {
           hidden={!props.isBlacklisted}
         >
           You have been <b>blacklisted</b>. You will not be able to rent any
-          vehicles.
+          Books or Videos.
         </Alert>
         <h2 className="title">Reserve Now!</h2>
         <p className="description">
@@ -47,6 +49,7 @@ function Home(props) {
       </Container>
 
       <Info />
+      <Footer />
     </div>
   );
 }

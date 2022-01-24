@@ -14,7 +14,9 @@ const authRoute = ({
   <Route
     {...rest}
     render={(props) =>
-      role === "admin" || (loading && authenticated) ? (
+      role === "admin" ||
+      role === "clerk" ||
+      (loading && authenticated) ? (
         <Component {...props} />
       ) : (
         <Redirect to="/" />

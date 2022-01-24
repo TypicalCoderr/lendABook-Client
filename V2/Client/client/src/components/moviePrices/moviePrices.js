@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import {
   Table,
   Card,
@@ -22,6 +23,8 @@ function MoviePrices(props) {
   const [pricePool, setPricePool] = useState([]);
   const [allPrices, setAllPrices] = useState([]);
   const [allPricesConst, setAllPricesConst] = useState([]);
+
+  let now = dayjs();
 
   //Destructure props
   const {
@@ -143,7 +146,7 @@ function MoviePrices(props) {
             className="price-link"
             style={{ textAlign: "right", padding: "10px" }}
           >
-            Prices gathered from google play movies
+            Prices gathered from google play movies {now.format("YYYY-MM-DD HH:mm")}
           </a>
         ) : null}
         <Card.Body>

@@ -13,11 +13,17 @@ import ManageBookReservation from "../../components/manageReservation/manageRese
 import ManageMovieReservation from "../../components/manageReservation/manageMovieReservation";
 import BookPrices from "../../components/bookPrices/bookPrices";
 import MoviePrices from "../../components/moviePrices/moviePrices";
+import CompanyBookPurchases from "../../components/companyPurchases/companyBookPurchases";
+import CompanyVideoPurchases from "../../components/companyPurchases/companyVideoPurchases";
+import SearchBooks from "../../components/searchBooksAPI/searchBooks";
+import BookDB from "../../components/SecondaryDB/bookDB";
 // import ManageReservation from "../../components/manageReservation/manageReservation";
 
 import "./dashboard.scss";
 
 import { connect } from "react-redux";
+
+
 
 const Dashboard = (props) => {
   const {
@@ -47,7 +53,23 @@ const Dashboard = (props) => {
             <Col xs={10} id="page-content-wrapper">
               <MoviePrices />
             </Col>
-          ) : (
+          ) : dashboard === 7 ? (
+            <Col xs={10} id="page-content-wrapper">
+              <CompanyBookPurchases />
+            </Col>
+          ) : dashboard === 8 ? (
+            <Col xs={10} id="page-content-wrapper">
+              <CompanyVideoPurchases />
+            </Col>
+          ) : dashboard === 9 ? (
+            <Col xs={10} id="page-content-wrapper">
+              <SearchBooks />
+            </Col>
+          ) : dashboard === 10 ? (
+            <Col xs={10} id="page-content-wrapper">
+              <BookDB />
+            </Col>
+          ): (
             <>
               <Col xs={7} id="page-content-wrapper">
                 {dashboard === 0 ? (

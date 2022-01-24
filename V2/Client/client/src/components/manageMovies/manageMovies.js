@@ -8,6 +8,7 @@ import {
   FormControl,
   Dropdown,
   Container,
+  Alert,
 } from "react-bootstrap";
 import PropTypes from "prop-types";
 
@@ -21,6 +22,9 @@ import { connect } from "react-redux";
 import { getAllMovies } from "../../redux/actions/dataActions";
 
 import { MOVIE_CATRGORIES } from "../../util/consts";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ManageMovies(props) {
   const [_movies, setMovies] = useState([]);
@@ -130,9 +134,10 @@ function ManageMovies(props) {
 
   return (
     <div>
+      <ToastContainer style={{ width: "30rem" }} />
       <Card
         className="search-box-users"
-        style={{ width: "67rem", height: "8rem" }}
+        style={{ width: "70rem", height: "8rem" }}
       >
         <Card.Body>
           <Card.Title className="search-box-books">Search Movies</Card.Title>
@@ -230,15 +235,17 @@ function ManageMovies(props) {
             </Card.Body>
           </Card>
         </Col>
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
+        {!loading && moviesMarkup.length > 0 ? (
           moviesMarkup.map((card, index) => (
             <Col lg={4} md={4} sm={4} key={index}>
               {" "}
               {card}{" "}
             </Col>
           ))
+        ) : moviesMarkup.length === 0 && !loading ? (
+          <Alert variant="warning">No Movies to show!</Alert>
+        ) : (
+          <p>Loading...</p>
         )}
       </Row>
       <AddMovieModal

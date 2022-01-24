@@ -92,6 +92,19 @@ function ViewMovie(props) {
               <Badge variant="secondary">Category</Badge>
               <span> {movie.category}</span>
             </ListGroup.Item>
+            {!loading && movie.noOfCopies > 0 ? (
+              <ListGroup.Item variant="info text-center">
+                <Badge variant="info">
+                  {movie.noOfCopies} copies Available
+                </Badge>
+                <span></span>
+              </ListGroup.Item>
+            ) : (
+              <ListGroup.Item variant="danger text-center">
+                <Badge variant="danger">No copies Available</Badge>
+                <span></span>
+              </ListGroup.Item>
+            )}
           </ListGroup>
 
           <ButtonGroup vertical className="view-book-image-options">

@@ -25,10 +25,10 @@ import Books from "./pages/books/books";
 import Dashboard from "./pages/dashboard/dashboard";
 import CartScreen from "./pages/cartScreen/cartScreen";
 import MovieCartScreen from "./pages/cartScreen/movieCartScreen";
-import Success from "./pages/success/success";
 import Movies from "./pages/movies/movies";
 import MyBookReservations from "./pages/myReservations/myBookReservations";
 import MyMovieReservations from "./pages/myReservations/myMovieReservations";
+import MyBookFavorites from "./pages/myFavorites/myBookFavorites";
 
 axios.defaults.baseURL = "http://localhost:3001";
 
@@ -79,6 +79,11 @@ function App() {
                 exact
                 path="/myReservations-movies"
                 component={MyMovieReservations}
+              />
+              <AuthRouteUser
+                exact
+                path="/myFavorites-books"
+                component={MyBookFavorites}
               />
               <AuthRouteAdmin
                 exact

@@ -11,8 +11,10 @@ import { logoutUser } from "../../redux/actions/userAction";
 function navbar(props) {
   const {
     authenticated,
-    user: { role },
+    user: { role},
   } = props;
+
+ 
 
   const handleLogout = () => {
     props.logoutUser();
@@ -66,6 +68,16 @@ function navbar(props) {
                         <NavDropdown.Item href="/myReservations-movies">
                           Movies
                         </NavDropdown.Item>
+                      </NavDropdown>
+                    )}
+                    {role === "customer" && (
+                      <NavDropdown title="myFavorites" id="basic-nav-dropdown">
+                        <NavDropdown.Item href="/myFavorites-books">
+                          Books
+                        </NavDropdown.Item>
+                        {/* <NavDropdown.Item href="/myFavorites-movies">
+                          Movies
+                        </NavDropdown.Item> */}
                       </NavDropdown>
                     )}
                   </Fragment>

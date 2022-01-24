@@ -8,7 +8,7 @@ import { getBook } from "../../redux/actions/dataActions";
 import "./bookCard.scss";
 
 function BookCard(props) {
-  const { ISBN, isAvailable, bookCover, title , author} = props.book;
+  const { ISBN, isAvailable, bookCover, title, author } = props.book;
 
   const handleSetBook = (ISBN) => {
     props.getBook(ISBN);
@@ -35,7 +35,7 @@ function BookCard(props) {
         <Badge variant="secondary">Author</Badge>
         <span>
           {"	"}
-          {author}
+          {author.substring(0, 20)}
         </span>
       </Card.Body>
     </Card>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import {
   Table,
   Card,
@@ -22,6 +23,8 @@ function BookPrices(props) {
   const [pricePool, setPricePool] = useState([]);
   const [allPrices, setAllPrices] = useState([]);
   const [allPricesConst, setAllPricesConst] = useState([]);
+
+  let now = dayjs();
 
   //Destructure props
   const {
@@ -69,7 +72,7 @@ function BookPrices(props) {
           <Col xs={4}>
             <Image
               src={element.img}
-              style={{ height: "10rem", width: "10rem" }}
+              style={{ height: "10rem", width: "7rem" }}
             />
           </Col>
           <Col xs={8}>{element.title}</Col>
@@ -168,12 +171,13 @@ function BookPrices(props) {
       <Card style={{ width: "80rem", height: "auto" }}>
         {!loading && allPrices.length > 0 ? (
           <a
-            href="https://www.amazon.com/Best-Sellers-Kindle-Store-eBooks/zgbs/digital-text/154606011/ref=zg_bs"
+            href="https://play.google.com/store/books/collection/cluster?clp=sgInCh8KGXByb21vdGlvbl8xMDAyMWFiX2R5bmFtaWMQRBgBIgQIBQgs:S:ANO1ljJ93fk&gsr=CiqyAicKHwoZcHJvbW90aW9uXzEwMDIxYWJfZHluYW1pYxBEGAEiBAgFCCw%3D:S:ANO1ljJCLsc&hl=en_US&gl=US"
             target="_blank"
             className="price-link"
             style={{ textAlign: "right", padding: "10px" }}
           >
-            Prices gathered from amazon kindle Store
+            Prices gathered from google play books on{" "}
+            {now.format("YYYY-MM-DD HH:mm")}
           </a>
         ) : null}
         <Card.Body>

@@ -9,6 +9,9 @@ import { clearErrors } from "../../redux/actions/uiActions";
 
 import { BOOK_CATRGORIES } from "../../util/consts";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function AddBookModal(props) {
   const [ISBN, setISBN] = useState("");
   const [title, setTitle] = useState("");
@@ -17,6 +20,7 @@ function AddBookModal(props) {
   const [author, setAuthor] = useState("");
   const [publisher, setPublisher] = useState("");
   const [ratings, setRatings] = useState("");
+  const [copies, setCopies] = useState("");
   const [errors, setErrors] = useState({});
 
   //When errors are updated the component is re-rendered to display errors
@@ -38,6 +42,7 @@ function AddBookModal(props) {
       category,
       summary,
       ratings,
+      copies,
     };
     //Add book to backend
     let result = await props.addBook(data);
@@ -46,6 +51,7 @@ function AddBookModal(props) {
     if (result === true) {
       props.onHide();
       clearFields();
+      successToaster();
     }
   };
 
@@ -56,7 +62,18 @@ function AddBookModal(props) {
     setISBN("");
     setPublisher("");
     setCategory(BOOK_CATRGORIES[0].id);
+    setRatings("");
+    setCopies("");
+    setSummary("");
     props.clearErrors();
+  };
+
+  const successToaster = () => {
+    toast.success("Book added successfully!", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 4000,
+      draggable: false,
+    });
   };
 
   const newProps = { ...props };
@@ -133,7 +150,7 @@ function AddBookModal(props) {
             </Form.Row>
 
             <Form.Row>
-              <Form.Group as={Col} md={9}>
+              <Form.Group as={Col} md={6}>
                 <Form.Label> Category </Form.Label>
                 <Form.Control
                   as="select"
@@ -151,6 +168,14 @@ function AddBookModal(props) {
                   onChange={(e) => setRatings(e.target.value)}
                 ></Form.Control>
               </Form.Group>
+              <Form.Group as={Col} md={3}>
+                <Form.Label> No. of Copies </Form.Label>
+                <Form.Control
+                  type="number"
+                  value={copies}
+                  onChange={(e) => setCopies(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
             </Form.Row>
 
             <Form.Row>
@@ -158,10 +183,11 @@ function AddBookModal(props) {
                 <Form.Label> Summary </Form.Label>
                 <Form.Control
                   as="textarea"
-                  rows={3}
-                  maxLength={50}
+                  rows={5}
+                  maxLength={250}
                   value={summary}
                   onChange={(e) => setSummary(e.target.value)}
+                  required
                 ></Form.Control>
               </Form.Group>
             </Form.Row>

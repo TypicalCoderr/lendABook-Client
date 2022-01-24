@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   InputGroup,
   Card,
+  Badge,
   Button,
   Col,
   Row,
@@ -10,61 +11,83 @@ import {
   Container,
   Alert,
 } from "react-bootstrap";
+
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import "./manageBooks.scss";
-//components
-import BookCard from "./bookCard";
-import AddBookModal from "./addBookModal";
-
-//redux
-import { connect } from "react-redux";
-import { getAllBooks } from "../../redux/actions/dataActions";
+import { getExternalBooks } from "../../redux/actions/dataActions";
 
 import { BOOK_CATRGORIES } from "../../util/consts";
 
-function ManageBooks(props) {
+import ViewBookModal from "./ViewBookModal";
+
+// import BookCard from "./bookCard";
+
+function BookDB(props) {
   const [_books, setBooks] = useState([]);
   const [bookPool, setBookPool] = useState([]);
-  const [addBookShow, setAddBookShow] = useState(false);
   const [category, setCategory] = useState("Category");
-  const [available, setAvailability] = useState("Availability");
+  const [selectBook, setSelectBook] = useState(null);
+  const [bookModalShow, setBookModalShow] = React.useState(false);
 
   const {
-    data: { books, loading },
+    data: { externalDB, loading },
   } = props;
 
-  //When component is initiated, get all books from the backend
   useEffect(() => {
-    props.getAllBooks();
+    props.getExternalBooks();
   }, []);
 
-  //When books list passed from props are updated, update state variables
   useEffect(() => {
-    if (books) {
-      setBooks(books);
-      setBookPool(books);
+    if (externalDB) {
+      setBooks(externalDB);
+      setBookPool(externalDB);
     }
-  }, [books]);
+  }, [externalDB]);
 
-  //Function to create listof books cards from book list in state
+  const handleBookClick = (ISBN, book) => {
+    if (_books.some((book) => book.ISBN == ISBN)) {
+      setSelectBook(book);
+      setBookModalShow(true);
+    }
+  };
+
   let booksMarkup = _books.map((book) => (
-    <BookCard key={book.ISBN} book={book} />
+    <Card
+      className="book-card"
+      key={book.ISBN}
+      style={{ height: "25rem" }}
+      onClick={() => handleBookClick(book.ISBN, book)}
+    >
+      <Card.Img className="vehicle-image" src={book.bookCover}></Card.Img>
+
+      <Card.Body>
+        <Badge variant="secondary">Title</Badge>
+        <span>
+          {"	"}
+          {book.title.substring(0, 35)}
+        </span>
+        <br />
+        <Badge variant="secondary">Author</Badge>
+        <span>
+          {"	"}
+          {book.author.substring(0, 35)}
+        </span>
+      </Card.Body>
+    </Card>
   ));
 
-  //Function to change displayed books when category is set
   const setValue = (type, name, value) => {
     handleReset();
 
     //Depending on category update state
     if (type === "category") setCategory(name);
-    else if (type === "isAvailable") setAvailability(name);
 
     //Filter book list
-    const booksCopy = books.map((book) => book);
+    const booksCopy = externalDB.map((book) => book);
     const result = booksCopy.filter((item) => {
       return item[type] === value;
     });
@@ -124,12 +147,11 @@ function ManageBooks(props) {
   const handleReset = () => {
     //Reset dropdown text
 
-    setAvailability("Availability");
     setCategory("Category");
 
     //Reset state
-    setBooks(books);
-    setBookPool(books);
+    setBooks(externalDB);
+    setBookPool(externalDB);
   };
 
   return (
@@ -137,7 +159,7 @@ function ManageBooks(props) {
       <ToastContainer style={{ width: "30rem" }} />
       <Card
         className="search-box-users"
-        style={{ width: "67rem", height: "8rem" }}
+        style={{ width: "96rem", height: "8rem" }}
       >
         <Card.Body>
           <Card.Title className="search-box-books">Search Books</Card.Title>
@@ -169,33 +191,7 @@ function ManageBooks(props) {
                     <Dropdown.Menu>{categoryDropdownMarkup}</Dropdown.Menu>
                   </Dropdown>
                 </Col>
-                <Col>
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      variant="danger"
-                      id="dropdown-basic"
-                      style={{ width: "100%" }}
-                    >
-                      {available}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item
-                        onSelect={() =>
-                          setValue("isAvailable", "Available", true)
-                        }
-                      >
-                        Available
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onSelect={() =>
-                          setValue("isAvailable", "Reserved", false)
-                        }
-                      >
-                        Unavailable
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </Col>
+
                 <Col xs={5}>
                   <Button
                     variant="outline-secondary"
@@ -215,36 +211,6 @@ function ManageBooks(props) {
         </Card.Body>
       </Card>
       <Row>
-        <Col lg={4}>
-          <Card className="book-card">
-            <Card.Img
-              variant="top"
-              src="http://localhost:3001/books/default_book.png"
-            />
-            <Card.Body>
-              <Button
-                variant="info"
-                className="vehicle-card-button"
-                onClick={() => setAddBookShow(true)}
-              >
-                <span>
-                  <i className="fas fa-plus-square fa-plus-square-add"></i>
-                  Add Book
-                </span>
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        {/* {loading ? (
-          <p>Loading...</p>
-        ) : (
-          booksMarkup.map((card, index) => (
-            <Col lg={4} md={4} sm={4} key={index}>
-              {" "}
-              {card}{" "}
-            </Col>
-          ))
-        )} */}
         {!loading && booksMarkup.length > 0 ? (
           booksMarkup.map((card, index) => (
             <Col lg={4} md={4} sm={4} key={index}>
@@ -258,13 +224,18 @@ function ManageBooks(props) {
           <p>Loading...</p>
         )}
       </Row>
-      <AddBookModal show={addBookShow} onHide={() => setAddBookShow(false)} />
+      <ViewBookModal
+        book={props}
+        show={bookModalShow}
+        _book={selectBook}
+        onHide={() => setBookModalShow(false)}
+      />
     </div>
   );
 }
 
-ManageBooks.propTypes = {
-  getAllBooks: PropTypes.func.isRequired,
+BookDB.propTypes = {
+  getExternalBooks: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -272,7 +243,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-  getAllBooks,
+  getExternalBooks,
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(ManageBooks);
+export default connect(mapStateToProps, mapActionsToProps)(BookDB);

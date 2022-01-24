@@ -15,11 +15,15 @@ import ReserveNow from "../../components/reserve_now/reserve_now";
 import Navbar from "../../components/navbar/navbar";
 import Book from "../../components/book/book";
 import ReserveBookModal from "../../components/reserveBooks/reserveBookModal";
+import Footer from "../../components/footer/footer";
 
 import "./books.scss";
 
 import { connect, useSelector } from "react-redux";
 import { getBook } from "../../redux/actions/dataActions";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { BOOK_CATRGORIES } from "../../util/consts";
 import PropTypes from "prop-types";
@@ -139,6 +143,7 @@ function Books(props) {
   return (
     <div className="top_image-books">
       <Navbar />
+      <ToastContainer/>
       <Container style={{ textAlign: "center" }}>
         {/* Alert message to be shown if user has not yet uploaded ID images */}
         <Alert
@@ -219,7 +224,7 @@ function Books(props) {
             <Link
               variant="outline-primary"
               style={{ width: "100%" }}
-              to="/cart"
+              to="/cart-books"
             >
               <Button renderAs="button" variant="outline-primary">
                 <span>
@@ -227,14 +232,18 @@ function Books(props) {
                     {" "}
                   </i>{" "}
                 </span>
-                View Book Cart
+                Book Cart
                 <div className="item_count">{getCartCount()}</div>
               </Button>
             </Link>
           </Col>
         </Row>
         {!loading && (_books.length === 0 || Object.keys(_books).length === 0) && (
-          <Alert variant="warning" className="no-vehicle-alert">
+          <Alert
+            variant="warning"
+            className="no-vehicle-alert"
+            style={{ marginBottom: "10rem" }}
+          >
             No books found! Try changing the reservation dates.
           </Alert>
         )}
@@ -250,6 +259,7 @@ function Books(props) {
         show={bookModalShow}
         onHide={() => setBookModalShow(false)}
       />
+      <Footer />
     </div>
   );
 }

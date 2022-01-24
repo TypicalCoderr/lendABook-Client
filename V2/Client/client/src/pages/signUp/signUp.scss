@@ -36,7 +36,7 @@
 .preview-box {
   justify-content: center;
   display: flex;
-  max-height: 400px;
+  max-height: 300px;
   border: 2px dashed rgba(0, 0, 0, 0.7);
   padding: 1rem;
   position: absolute;
@@ -53,4 +53,21 @@
 
 .error-text {
   color: red;
+}
+
+.upload-label {
+  margin-top: 50px;
+}
+
+.img-upload-card {
+  height: 120%;
+  width: 90%;
+  background-color: #00000059;
+  border-radius: 5%;
+  color: white;
+}
+
+.image-uploaded-text {
+  font-size: 0.8rem;
+  margin-top: -10px;
 }

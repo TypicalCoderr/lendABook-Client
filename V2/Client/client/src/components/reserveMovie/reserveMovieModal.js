@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Modal, Button, Table, Badge, Alert } from "react-bootstrap";
+import { Modal, Button, Table, Badge, Alert, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 import "./reserveMovieModal.scss";
@@ -7,6 +7,9 @@ import "./reserveMovieModal.scss";
 import { addToMovieCart } from "../../redux/actions/cartActions";
 
 import { connect, useDispatch } from "react-redux";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ReserveMovieModal(props) {
   const [errors, setErrors] = useState({});
@@ -26,6 +29,14 @@ function ReserveMovieModal(props) {
   } = props;
   //Calculate initial total
   const newProps = { ...props };
+
+  const successToaster = () => {
+    toast.success("Movie was added to the cart!", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 4000,
+      draggable: false,
+    });
+  };
 
   const addToCartHandler = () => {
     dispatch(addToMovieCart(movie.movieId));
@@ -65,25 +76,81 @@ function ReserveMovieModal(props) {
           {/* If user is verified and data is loaded */}
           {props.isVerified === true && movie && (
             <div className="rent-vehicle-body">
-              <img
-                className="vehicle-image"
-                style={{ marginLeft: "250px", padding: "10px" }}
-                src={movie.movieCover}
-                alt="vehicle"
-              />
-              <Table striped bordered hover>
-                <tbody className="rent-vehicle-table">
-                  <tr>{`${movie.summary}`}</tr>
-                  <tr>
-                    <td>Charge per day</td>
-                    <td>{`${subscription.video_charge}`}LKR</td>
-                  </tr>
-                  <tr>
-                    <td>Reserve period</td>
-                    <td>{`${dates.reserveDate} to  ${dates.returnDate}`}</td>
-                  </tr>
-                </tbody>
-              </Table>
+              <Row>
+                <Col xm={6}>
+                  <img
+                    className="book-cover-image"
+                    style={{ marginLeft: "30px" }}
+                    src={movie.movieCover}
+                    alt="vehicle"
+                  />
+                  <div
+                    className="d-grid gap-2"
+                    style={{
+                      marginTop: "1rem",
+                      paddingLeft: "2rem",
+                      paddingRight: "2rem",
+                    }}
+                  >
+                    {props.isVerified === true && movie && (
+                      <Button
+                        variant="warning"
+                        onClick={() => {
+                          addToCartHandler();
+                          props.onHide();
+                          successToaster();
+                        }}
+                      >
+                        Add to Cart
+                      </Button>
+                    )}
+                  </div>
+                </Col>
+                <Col xm={6}>
+                  <div className="lable-row">{`${movie.summary}`}</div>
+
+                  <div className="lable-row">
+                    Directered by{" "}
+                    <b style={{ fontWeight: "bold" }}>{movie.director}</b>
+                  </div>
+                  <div className="lable-row">
+                    Production by{" "}
+                    <b style={{ fontWeight: "bold" }}>{movie.production}</b>
+                  </div>
+                  <div className="lable-row">
+                    Lending Charge{" "}
+                    <b style={{ fontWeight: "bold", color: "red" }}>
+                      {subscription.video_charge}LKR
+                    </b>
+                  </div>
+                  <div
+                    style={{
+                      fontStyle: "italic",
+                      color: "grey",
+                      fontSize: "13px",
+                    }}
+                  >
+                    {" "}
+                    late return will add {subscription.overdue}LKR of Overdue
+                    charge per day
+                  </div>
+                  <div className="lable-row">
+                    Reserve period{" "}
+                    <b
+                      style={{ fontWeight: "bold" }}
+                    >{`${dates.reserveDate} to  ${dates.returnDate}`}</b>
+                  </div>
+                  <div className="lable-row">
+                    Categories :
+                    <span className="badge bg-dark">
+                      {" "}
+                      {movie.category.toUpperCase()}
+                    </span>
+                  </div>
+                  <div className="lable-row"></div>
+                </Col>
+              </Row>
+
               <p
                 className="error-text"
                 style={{ textAlign: "center" }}
@@ -98,17 +165,7 @@ function ReserveMovieModal(props) {
           <Button variant="secondary" onClick={props.onHide}>
             Close
           </Button>
-          {props.isVerified === true && movie && (
-            <Button
-              variant="warning"
-              onClick={() => {
-                addToCartHandler();
-                props.onHide();
-              }}
-            >
-              Add to Cart
-            </Button>
-          )}
+
           {props.isVerified === false ? (
             <Button variant="info" href="/uploadImages">
               Upload Image

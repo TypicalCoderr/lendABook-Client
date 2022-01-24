@@ -27,7 +27,11 @@ function PriceChart() {
                 <li>Annual membership fee</li>
                 <li>Overdue charges - Books/Videos per day</li>
               </ul>
-              <Button variant="outline-secondary" size="lg">
+              <Button
+                variant="outline-secondary"
+                size="lg"
+                href="/user/register"
+              >
                 Choose plan
               </Button>
             </Card.Body>
@@ -50,7 +54,11 @@ function PriceChart() {
                 <li>Annual membership fee</li>
                 <li>Overdue charges - Books/Videos per day</li>
               </ul>
-              <Button variant="outline-secondary" size="lg">
+              <Button
+                variant="outline-secondary"
+                size="lg"
+                href="/user/register"
+              >
                 Choose plan
               </Button>
             </Card.Body>
@@ -73,7 +81,11 @@ function PriceChart() {
                 <li>Annual membership fee</li>
                 <li>Overdue charges - Books/Videos per day</li>
               </ul>
-              <Button variant="outline-secondary" size="lg">
+              <Button
+                variant="outline-secondary"
+                size="lg"
+                href="/user/register"
+              >
                 Choose plan
               </Button>
             </Card.Body>
@@ -96,7 +108,11 @@ function PriceChart() {
                 <li>Annual membership fee</li>
                 <li>Overdue charges - Books/Videos per day</li>
               </ul>
-              <Button variant="outline-secondary" size="lg">
+              <Button
+                variant="outline-secondary"
+                size="lg"
+                href="/user/register"
+              >
                 Choose plan
               </Button>
             </Card.Body>

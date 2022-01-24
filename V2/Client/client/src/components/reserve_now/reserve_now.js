@@ -9,7 +9,6 @@ import "./reserve_now.scss";
 //REDUX
 import { connect } from "react-redux";
 import { setDates } from "../../redux/actions/dataActions";
-import { propTypes } from "react-bootstrap/esm/Image";
 
 function Reserve_now(props) {
   const [reserveDate, setReserveDate] = useState("");
@@ -22,32 +21,30 @@ function Reserve_now(props) {
   }, [props.UI.errors]);
 
   useEffect(() => {
-      if (props.dates){
-            setReserveDate(props.dates.reserveDate);
-            setReserveDate(props.dates.returnDate);
-      }
+    if (props.dates) {
+      setReserveDate(props.dates.reserveDate);
+      setReserveDate(props.dates.returnDate);
+    }
   }, []);
 
   //create the minimum reserve date
 
-  const minDate = () =>{
-      const now = dayjs();
+  const minDate = () => {
+    const now = dayjs();
 
-
-      return now.add(1, "day").format("YYYY-MM-DD");
+    return now.add(1, "day").format("YYYY-MM-DD");
   };
 
   const handleFormSubmit = (e) => {
-      e.preventDefault();
-      const data = { reserveDate,returnDate};
-      props.setDates(data, props.history);
+    e.preventDefault();
+    const data = { reserveDate, returnDate };
+    props.setDates(data, props.history);
   };
 
-
   return (
-  <div className="box">
-      <form onSubmit={handleFormSubmit} >
-          <Row>
+    <div className="box">
+      <form onSubmit={handleFormSubmit}>
+        <Row>
           <Col>
             <p>Reservation Date</p>
             <input
@@ -69,35 +66,34 @@ function Reserve_now(props) {
               value={returnDate}
               onChange={(e) => setReturnDate(e.target.value)}
             ></input>
-        
           </Col>
           <Col className="col-button">
             <Button variant="primary" className="search-button" type="submit">
               Search
             </Button>
           </Col>
-          </Row>
-          <p className="error-text-rent" hidden={!errors}>
-          {errors.message}
+        </Row>
+        <p className="error-text-rent" hidden={!errors}>
+          {errors && errors.message}
         </p>
       </form>
-
-  </div>);
+    </div>
+  );
 }
 
 Reserve_now.propTypes = {
-    setDates: PropTypes.func.isRequired,
-    dates: PropTypes.object,
-    UI: PropTypes.object.isRequired,
+  setDates: PropTypes.func.isRequired,
+  dates: PropTypes.object,
+  UI: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-    dates: state.data.dates,
-    UI: state.UI,
+  dates: state.data.dates,
+  UI: state.UI,
 });
 
 const mapActionsToProps = {
-    setDates,
-}
+  setDates,
+};
 
 export default connect(mapStateToProps, mapActionsToProps)(Reserve_now);

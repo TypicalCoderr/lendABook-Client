@@ -14,6 +14,9 @@ import PropTypes from "prop-types";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function MovieCartScreen(props) {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
@@ -23,11 +26,15 @@ function MovieCartScreen(props) {
   const { cartItems } = cart;
 
   const [nofiy, setNotify] = useState("");
+  const [subMovies, setSubMovies] = useState(0);
+  const [cartLength, setCartLength] = useState(0);
 
   const movies = { cartItems };
 
   const removeFromCartHandler = (movieId) => {
     dispatch(removeFromMovieCart(movieId));
+    cartItemRemoveToster();
+    setCartLength(cartLength - 1);
   };
 
   const getTotal = () => {
@@ -43,7 +50,15 @@ function MovieCartScreen(props) {
     props.UI.success && setNotify(props.UI.success.message);
   }, [props.UI.success]);
 
+  useEffect(() => {
+    setSubMovies(subscription.noOfVideos);
+    setCartLength(cartItems.length);
+  }, []);
+
   const handleCheckOut = async (event) => {
+    if (cartLength === 0) {
+      emptyCartToaster();
+    }
     event.preventDefault();
     const data = {
       reserve: dates.reserveDate,
@@ -51,10 +66,55 @@ function MovieCartScreen(props) {
       charge: getTotal(),
       userId: user.id,
       movies: movies,
+      cartLength: cartLength,
+      subVideos: subMovies,
     };
     console.log(data);
     //Make the rent
     let result = await props.makeMovieReservation(data, props.history);
+
+    if (result == true) {
+      successToaster();
+    } else {
+      errorToaster();
+    }
+  };
+
+  const successToaster = () => {
+    toast.success("reservation succeeded!", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 4000,
+      draggable: false,
+    });
+  };
+
+  const errorToaster = () => {
+    toast.error(
+      " Sorry! You can not reserve more than " +
+        subMovies +
+        " Movies at a time",
+      {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 4000,
+        draggable: false,
+      }
+    );
+  };
+
+  const emptyCartToaster = () => {
+    toast.warn("Movie cart is empty", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 4000,
+      draggable: false,
+    });
+  };
+
+  const cartItemRemoveToster = () => {
+    toast.success("Movie was removed from the cart!", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 4000,
+      draggable: false,
+    });
   };
 
   const [showA, setShowA] = useState(true);
@@ -64,6 +124,7 @@ function MovieCartScreen(props) {
   return (
     <div className="top_image">
       <Navbar />
+      <ToastContainer style={{ width: "30rem" }} />
       <Container>
         <Alert
           variant="danger"
@@ -90,42 +151,16 @@ function MovieCartScreen(props) {
           You have been <b>blacklisted</b>. You will not be able to rent any
           books or videos.
         </Alert>
-        <h2 className="title">Reserve Now!</h2>
+        <h2 className="title">Reservation cart!</h2>
         <p className="description">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
         </p>
         <Alert variant="light" className="user-card" align="end"></Alert>
 
-        {
-          <Alert
-            variant="success"
-            align="center"
-            show={showA}
-            onClose={toggleShowA}
-            hidden={!nofiy}
-            dismissible
-          >
-            <Alert.Heading> {!nofiy ? "nofiy" : nofiy}</Alert.Heading>
-            <p>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula,
-              eget lacinia odio sem nec elit. Cras mattis consectetur purus sit
-              amet fermentum.
-            </p>
-          </Alert>
-        }
+      
 
-        {/* <Toast show={showA} onClose={toggleShowA}>
-          <Toast.Header>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded me-2"
-              alt=""
-            />
-            <strong className="me-auto">Bootstrap</strong>
-          </Toast.Header>
-          <Toast.Body>{!nofiy ? "nofiy" : nofiy}</Toast.Body>
-        </Toast> */}
+       
         {/*start of  cart */}
         <Row>
           <Col md={10}>

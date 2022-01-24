@@ -1,17 +1,19 @@
-.vehicle-box {
-  height: 21rem;
+.book-box {
+  height: 25rem;
   position: relative;
   border: 1px solid #bbb;
+  // box-shadow: 4px 4px 15px rgba(#000, 0.15);
   &:hover {
     cursor: pointer;
     border-color: #007bff;
     border-style: groove;
-    //box-shadow: 0px -1px 5px 0px rgba(0, 0, 0, 0.82);
-    //-webkit-box-shadow: 0px -1px 5px 0px rgba(0, 0, 0, 0.82);
-    //-moz-box-shadow: 0px -1px 5px 0px rgba(0, 0, 0, 0.82);
+    box-shadow: 4px 4px 15px rgba(#000, 0.15);
+    // box-shadow: 0px -1px 5px 0px rgba(0, 0, 0, 0.82);
+    // -webkit-box-shadow: 0px -1px 5px 0px rgba(0, 0, 0, 0.82);
+    // -moz-box-shadow: 0px -1px 5px 0px rgba(0, 0, 0, 0.82);
   }
 }
-.vehicle-ribbon {
+.book-ribbon {
   position: absolute;
   right: -5px;
   top: -5px;
@@ -67,20 +69,20 @@
   object-fit: contain;
 }
 
-.vehicle-icon {
-  height: 16px;
-  width: 16px;
-  object-fit: contain;
-  margin-left: 5px;
-}
+// .vehicle-icon {
+//   height: 16px;
+//   width: 16px;
+//   object-fit: contain;
+//   margin-left: 5px;
+// }
 
-.vehicle-info-badges {
+.book-info-badges {
   position: absolute;
   top: 5%;
   left: 5%;
 }
 
-.vehicle-title {
+.book-title {
   padding: 5px;
   margin-top: 5px;
   font-weight: bold;

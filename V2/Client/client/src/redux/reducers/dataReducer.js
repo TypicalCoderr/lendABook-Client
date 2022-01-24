@@ -10,6 +10,11 @@ import {
   SET_BOOK_PRICES,
   SET_MOVIE_PRICES,
   SET_RESERVATIONS,
+  SET_COMPANY_PURCHASES_BOOKS,
+  SET_COMPANY_PURCHASES_MOVIES,
+  SET_API_RESULT,
+  SET_BOOK_FAVORITES,
+  SET_BOOKS_SECONDARY_DB,
 } from "../types";
 
 const initialState = {
@@ -19,6 +24,11 @@ const initialState = {
   reservations: [],
   bookPrices: [],
   videoPrices: [],
+  bookPurchases: [],
+  moviePurchases: [],
+  APIResult: [],
+  bookFavorites: [],
+  externalDB: [],
   loading: false,
 };
 
@@ -86,7 +96,36 @@ export default function (state = initialState, action) {
         videoPrices: action.payload,
         loading: false,
       };
-
+    case SET_COMPANY_PURCHASES_BOOKS:
+      return {
+        ...state,
+        bookPurchases: action.payload,
+        loading: false,
+      };
+    case SET_COMPANY_PURCHASES_MOVIES:
+      return {
+        ...state,
+        moviePurchases: action.payload,
+        loading: false,
+      };
+    case SET_API_RESULT:
+      return {
+        ...state,
+        APIResult: action.payload,
+        loading: false,
+      };
+    case SET_BOOK_FAVORITES:
+      return {
+        ...state,
+        bookFavorites: action.payload,
+        loading: false,
+      };
+    case SET_BOOKS_SECONDARY_DB:
+      return {
+        ...state,
+        externalDB: action.payload,
+        loading: false,
+      };
     default:
       return state;
   }

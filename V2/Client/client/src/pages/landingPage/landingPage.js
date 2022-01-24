@@ -4,8 +4,15 @@ import { Link } from "react-router-dom";
 import img from "../../assets/book-lover.svg";
 import "./landingPage.scss";
 import Pricing from "../../components/pricing/priceChart";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-function Home() {
+function Home(props) {
+  const {
+    authenticated,
+    user: { role },
+  } = props;
+
   return (
     <>
       <Container className="container">
@@ -39,10 +46,19 @@ function Home() {
           </p>
         </div>
       </Container>
-
-      <Pricing />
+      {!authenticated && <Pricing />}
     </>
   );
 }
 
-export default Home;
+Home.propTypes = {
+  user: PropTypes.object.isRequired,
+  authenticated: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  authenticated: state.user.authenticated,
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(Home);

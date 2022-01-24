@@ -9,7 +9,7 @@ const authRoute = ({ component: Component, authenticated, role, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        !authenticated || role === "admin" ? (
+        !authenticated || role === "admin" || role === "clerk" ? (
           <Redirect to="/" />
         ) : (
           <Component {...props} />

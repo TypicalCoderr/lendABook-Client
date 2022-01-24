@@ -15,6 +15,7 @@ import MovieDates from "../../components/movie_dates/movie_dates";
 import Navbar from "../../components/navbar/navbar";
 import Movie from "../../components/movie/movie";
 import ReserveMovieModal from "../../components/reserveMovie/reserveMovieModal";
+import Footer from "../../components/footer/footer";
 
 import "./movies.scss";
 
@@ -24,6 +25,9 @@ import { getMovie } from "../../redux/actions/dataActions";
 import { MOVIE_CATRGORIES } from "../../util/consts";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Movies(props) {
   const [_movies, setMovies] = useState([]);
@@ -140,6 +144,7 @@ function Movies(props) {
   return (
     <div className="top_image-books">
       <Navbar />
+      <ToastContainer/>
       <Container style={{ textAlign: "center" }}>
         {/* Alert message to be shown if user has not yet uploaded ID images */}
         <Alert
@@ -236,7 +241,11 @@ function Movies(props) {
         </Row>
         {!loading &&
           (_movies.length === 0 || Object.keys(_movies).length === 0) && (
-            <Alert variant="warning" className="no-vehicle-alert">
+            <Alert
+              variant="warning"
+              className="no-vehicle-alert"
+              style={{ marginBottom: "10rem" }}
+            >
               No videos found! Try changing the reservation dates.
             </Alert>
           )}
@@ -246,12 +255,14 @@ function Movies(props) {
             <CardColumns style={{ marginTop: 20 }}>{chunk}</CardColumns>
           ))}
       </Container>
+
       <ReserveMovieModal
         history={props.history}
         isVerified={props.isVerified}
         show={movieModalShow}
         onHide={() => setMovieModalShow(false)}
       />
+      <Footer />
     </div>
   );
 }

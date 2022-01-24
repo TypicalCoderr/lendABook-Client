@@ -265,7 +265,11 @@ function SignUp(props) {
                 </Col>
               </Row>
 
-              <Alert variant="success" hidden={!nofiy}>
+              <Alert
+                variant="success"
+                hidden={!nofiy}
+                style={{ marginTop: "10px" }}
+              >
                 {!nofiy ? "nofiy" : nofiy}
               </Alert>
 

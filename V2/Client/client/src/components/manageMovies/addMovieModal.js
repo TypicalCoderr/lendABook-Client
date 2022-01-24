@@ -7,6 +7,9 @@ import { connect } from "react-redux";
 import { addMovie } from "../../redux/actions/dataActions";
 import { clearErrors } from "../../redux/actions/uiActions";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
+
 import { MOVIE_CATRGORIES } from "../../util/consts";
 
 function AddMovieModal(props) {
@@ -17,6 +20,7 @@ function AddMovieModal(props) {
   const [director, setDirector] = useState("");
   const [production, setProduction] = useState("");
   const [ratings, setRatings] = useState("");
+  const [copies, setCopies] = useState("");
   const [errors, setErrors] = useState({});
 
   //When errors are updated the component is re-rendered to display errors
@@ -38,6 +42,7 @@ function AddMovieModal(props) {
       category,
       summary,
       ratings,
+      copies,
     };
     //Add book to backend
     let result = await props.addMovie(data);
@@ -46,6 +51,7 @@ function AddMovieModal(props) {
     if (result === true) {
       props.onHide();
       clearFields();
+      successToaster();
     }
   };
 
@@ -56,7 +62,18 @@ function AddMovieModal(props) {
     setMovieId("");
     setProduction("");
     setCategory(MOVIE_CATRGORIES[0].id);
+    setRatings("");
+    setCopies("");
+    setSummary("");
     props.clearErrors();
+  };
+
+  const successToaster = () => {
+    toast.success("Movie added successfully!", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 4000,
+      draggable: false,
+    });
   };
 
   const newProps = { ...props };
@@ -136,7 +153,7 @@ function AddMovieModal(props) {
             </Form.Row>
 
             <Form.Row>
-              <Form.Group as={Col} md={9}>
+              <Form.Group as={Col} md={6}>
                 <Form.Label> Category </Form.Label>
                 <Form.Control
                   as="select"
@@ -154,6 +171,14 @@ function AddMovieModal(props) {
                   onChange={(e) => setRatings(e.target.value)}
                 ></Form.Control>
               </Form.Group>
+              <Form.Group as={Col} md={3}>
+                <Form.Label> No. of Copies </Form.Label>
+                <Form.Control
+                  type="number"
+                  value={copies}
+                  onChange={(e) => setCopies(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
             </Form.Row>
 
             <Form.Row>
@@ -161,8 +186,8 @@ function AddMovieModal(props) {
                 <Form.Label> Summary </Form.Label>
                 <Form.Control
                   as="textarea"
-                  rows={3}
-                  maxLength={50}
+                  rows={5}
+                  maxLength={250}
                   value={summary}
                   onChange={(e) => setSummary(e.target.value)}
                 ></Form.Control>

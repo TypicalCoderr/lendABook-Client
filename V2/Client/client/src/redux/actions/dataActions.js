@@ -1,5 +1,6 @@
 import axios from "axios";
 import dayjs from "dayjs";
+import request from "superagent";
 
 import {
   SET_USERS,
@@ -19,6 +20,12 @@ import {
   CLEAR_ERRORS,
   CLEAR_CART,
   SET_RESERVATIONS,
+  SET_COMPANY_PURCHASES_BOOKS,
+  SET_UPDATE_CSV,
+  SET_COMPANY_PURCHASES_MOVIES,
+  SET_API_RESULT,
+  SET_BOOK_FAVORITES,
+  SET_BOOKS_SECONDARY_DB,
 } from "../types";
 
 /* Add a book */
@@ -37,6 +44,7 @@ export const addBook = (book) => async (dispatch) => {
       type: SET_ERRORS,
       payload: error.response.data,
     });
+    console.log(error.message);
   }
 };
 
@@ -56,6 +64,50 @@ export const getAllBooks = () => async (dispatch) => {
   }
 };
 
+/* Get books from google book api*/
+export const getAPIbooks = (searchKey) => async (dispatch) => {
+  let query = searchKey;
+  const apiKey = "AIzaSyAg8IbVp8wbqOJU3POUUDiDM0qUpy08afk";
+  let url =
+    "https://www.googleapis.com/books/v1/volumes?q=" +
+    query +
+    "&maxResults=40&key=" +
+    apiKey;
+
+  if (searchKey != null) {
+    dispatch({ type: LOADING_DATA });
+    try {
+      console.log();
+      let results = await request.get(url);
+      console.log(results.body);
+      dispatch({
+        type: SET_API_RESULT,
+        payload: results.body.items,
+      });
+    } catch (error) {
+      dispatch({ type: SET_API_RESULT, payload: [] });
+      console.log(error.message);
+    }
+  }
+};
+
+export const updateBook = (book) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+
+  try {
+    let results = await axios.post("/books/update-book", book);
+    await dispatch(getAllBooks());
+    dispatch({ type: CLEAR_ERRORS });
+
+    if (results) return true;
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data,
+    });
+  }
+};
+
 /* Add a movie */
 export const addMovie = (movie) => async (dispatch) => {
   dispatch({ type: LOADING_UI });
@@ -67,6 +119,25 @@ export const addMovie = (movie) => async (dispatch) => {
 
     //Prevent modal from closing after errors are displayed
     if (results.data.movieId) return true;
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data,
+    });
+  }
+};
+
+/*add books to favorites*/
+export const addBooksToFavorites = (data) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  console.log(data);
+  try {
+    let results = await axios.post("/bookFavorites/add-favorite", data);
+    // await dispatch(getAllMovies());
+    dispatch({ type: CLEAR_ERRORS });
+
+    //Prevent modal from closing after errors are displayed
+    if ((results.data.message = "successfully added to favorites")) return true;
   } catch (error) {
     dispatch({
       type: SET_ERRORS,
@@ -133,7 +204,6 @@ export const getUser = (id) => async (dispatch) => {
 
 /* Get all users */
 export const getAllUsers = () => async (dispatch) => {
-
   dispatch({ type: LOADING_DATA });
   try {
     let results = await axios.get("/user");
@@ -353,9 +423,13 @@ export const makeReservation = (data, history) => async (dispatch) => {
     dispatch({ type: CLEAR_CART });
 
     //Prevent modal from closing after errors are displayed
-    // if (results.data._id) return true;
+    if (results.data.message === "Reservation succeeded!") return true;
   } catch (error) {
-    console.log(error.response.message);
+    console.log(error.response.data);
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data,
+    });
   }
 };
 
@@ -368,9 +442,13 @@ export const makeMovieReservation = (data, history) => async (dispatch) => {
     dispatch({ type: CLEAR_CART });
 
     //Prevent modal from closing after errors are displayed
-    // if (results.data._id) return true;
+    if (results.data.message === "Reservation succeeded!") return true;
   } catch (error) {
     console.log(error.response.message);
+    // dispatch({
+    //   type: SET_ERRORS,
+    //   payload: error.response.data,
+    // });
   }
 };
 
@@ -384,7 +462,7 @@ export const removeBook = (ISBN) => async (dispatch) => {
     dispatch({ type: CLEAR_ERRORS });
 
     //Prevent modal from closing after errors are displayed
-    if (results.data.message === "Successfully deleted") return true;
+    if (results.data.message === "Book Successfully deleted") return true;
   } catch (error) {
     dispatch({
       type: SET_ERRORS,
@@ -481,6 +559,22 @@ export const getMyBookReservations = () => async (dispatch) => {
   }
 };
 
+/* Get my book favorites*/
+export const getMyBookFavorites = () => async (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  try {
+    let results = await axios.get("/bookFavorites/");
+    console.log(results.data._favBooks);
+    dispatch({
+      type: SET_BOOK_FAVORITES,
+      payload: results.data._favBooks,
+    });
+  } catch (error) {
+    dispatch({ type: SET_BOOK_FAVORITES, payload: [] });
+    console.log(error);
+  }
+};
+
 /* Get moviereservations of logged in user */
 export const getMyMovieReservations = () => async (dispatch) => {
   dispatch({ type: LOADING_DATA });
@@ -499,7 +593,6 @@ export const getMyMovieReservations = () => async (dispatch) => {
 
 /* Get all competitive book prices */
 export const getBookPrices = () => async (dispatch) => {
- 
   dispatch({ type: LOADING_DATA });
   try {
     let results = await axios.get("/getBookPrices");
@@ -515,7 +608,6 @@ export const getBookPrices = () => async (dispatch) => {
 
 /* Get all competitive movie prices */
 export const getMoviePrices = () => async (dispatch) => {
- 
   dispatch({ type: LOADING_DATA });
   try {
     let results = await axios.get("/getMoviePrices");
@@ -525,6 +617,113 @@ export const getMoviePrices = () => async (dispatch) => {
     });
   } catch (error) {
     dispatch({ type: SET_MOVIE_PRICES, payload: [] });
+    console.log(error);
+  }
+};
+
+/*read csv file of company purchases books */
+export const getCompanyPurchasedBooks = () => async (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  try {
+    let results = await axios.get("/csv/books");
+    dispatch({
+      type: SET_COMPANY_PURCHASES_BOOKS,
+      payload: results.data._booksPurchases,
+    });
+  } catch (error) {
+    dispatch({ type: SET_COMPANY_PURCHASES_BOOKS, payload: [] });
+    console.log(error);
+  }
+};
+
+/*read csv file of company purchases movies */
+export const getCompanyPurchasedMovies = () => async (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  try {
+    let results = await axios.get("/csv/movies");
+    dispatch({
+      type: SET_COMPANY_PURCHASES_MOVIES,
+      payload: results.data._moviesPurchases,
+    });
+  } catch (error) {
+    dispatch({ type: SET_COMPANY_PURCHASES_MOVIES, payload: [] });
+    console.log(error);
+  }
+};
+
+/*update csv file of company purchases books */
+export const updateBookCSV = (ISBN) => async (dispatch) => {
+  console.log(ISBN);
+  // dispatch({ type: LOADING_DATA });
+  try {
+    let results = await axios.post(`/csv/update/${ISBN}`);
+    await dispatch(getCompanyPurchasedBooks());
+  } catch (error) {
+    dispatch({ type: SET_UPDATE_CSV, payload: [] });
+    console.log(error);
+  }
+};
+
+/*update csv file of company purchases movies */
+export const updateMovieCSV = (movieId) => async (dispatch) => {
+  console.log(movieId);
+  // dispatch({ type: LOADING_DATA });
+  try {
+    let results = await axios.post(`/csv/updateMovies/${movieId}`);
+    await dispatch(getCompanyPurchasedMovies());
+  } catch (error) {
+    dispatch({ type: SET_UPDATE_CSV, payload: [] });
+    console.log(error);
+  }
+};
+
+/* update book copies */
+export const updateBookCopies = (book) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  // console.log("sdsd"+book);
+  try {
+    let results = await axios.post("/books/update-copies", book);
+
+    console.log(results);
+    if (results) return true;
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data,
+    });
+    console.log(error.message);
+  }
+};
+
+/* update movie copies */
+export const updateMovieCopies = (movie) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  // console.log("sdsd"+book);
+  try {
+    let results = await axios.post("/movies/update-copies", movie);
+
+    console.log(results);
+    if (results) return true;
+  } catch (error) {
+    dispatch({
+      type: SET_ERRORS,
+      payload: error.response.data,
+    });
+    console.log(error.message);
+  }
+};
+
+export const getExternalBooks = () => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  try {
+    let results = await axios.get("/sencondDB/");
+    console.log(results);
+    dispatch({
+      type: SET_BOOKS_SECONDARY_DB,
+      payload: results.data.books,
+    });
+  } catch (error) {
+    dispatch({ type: SET_BOOKS_SECONDARY_DB, payload: [] });
     console.log(error);
   }
 };

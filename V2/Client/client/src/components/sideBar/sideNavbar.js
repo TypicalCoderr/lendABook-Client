@@ -47,6 +47,26 @@ const SideNavbar = (props) => {
       id == "video-prices-dashboard-button-icon"
     ) {
       props.setDashboard(6);
+    } else if (
+      id == "company-purchase-books-dashboard-button" ||
+      id == "company-purchase-books-dashboard-button-icon"
+    ) {
+      props.setDashboard(7);
+    } else if (
+      id == "company-purchase-videos-dashboard-button" ||
+      id == "company-purchase-videos-dashboard-button-icon"
+    ) {
+      props.setDashboard(8);
+    } else if (
+      id == "search-books-dashboard-button" ||
+      id == "search-books-dashboard-button-icon"
+    ) {
+      props.setDashboard(9);
+    } else if (
+      id == "secondary-book-db-dashboard-button" ||
+      id == "secondary-book-db-dashboard-button-icon"
+    ) {
+      props.setDashboard(10);
     }
   };
 
@@ -164,7 +184,7 @@ const SideNavbar = (props) => {
               onClick={handleSetDashboard}
             >
               <i class="fas fa-dollar-sign icon"></i>
-              Comp. Prices / Books
+              Compare Prices / Books
             </span>
           </Button>
         </Nav.Item>
@@ -184,7 +204,87 @@ const SideNavbar = (props) => {
               onClick={handleSetDashboard}
             >
               <i class="fas fa-dollar-sign icon"></i>
-              Comp. Prices / Videos
+              Compare Prices / Videos
+            </span>
+          </Button>
+        </Nav.Item>
+
+        <Nav.Item className="sidebar-item">
+          <Button
+            variant="primary"
+            className={`sidebar-button ${
+              dashboard === 7 && "sidebar-button-active"
+            }`}
+            size="lg"
+            id="company-purchase-books-dashboard-button"
+            onClick={handleSetDashboard}
+          >
+            <span
+              id="company-purchase-books-dashboard-button-icon"
+              onClick={handleSetDashboard}
+            >
+              <i class="fas fa-cart-arrow-down icon"></i>
+              Company purchases/ books
+            </span>
+          </Button>
+        </Nav.Item>
+
+        <Nav.Item className="sidebar-item">
+          <Button
+            variant="primary"
+            className={`sidebar-button ${
+              dashboard === 8 && "sidebar-button-active"
+            }`}
+            size="lg"
+            id="company-purchase-videos-dashboard-button"
+            onClick={handleSetDashboard}
+          >
+            <span
+              id="company-purchase-videos-dashboard-button-icon"
+              onClick={handleSetDashboard}
+            >
+              <i class="fas fa-cart-arrow-down icon"></i>
+              Company purchases/ videos
+            </span>
+          </Button>
+        </Nav.Item>
+
+        <Nav.Item className="sidebar-item">
+          <Button
+            variant="primary"
+            className={`sidebar-button ${
+              dashboard === 9 && "sidebar-button-active"
+            }`}
+            size="lg"
+            id="search-books-dashboard-button"
+            onClick={handleSetDashboard}
+          >
+            <span
+              id="search-books-dashboard-button-icon"
+              onClick={handleSetDashboard}
+            >
+              <i class="fas fa-search icon"></i>
+              Search books
+            </span>
+          </Button>
+        </Nav.Item>
+
+        <Nav.Item className="sidebar-item">
+          <Button
+            variant="primary"
+            className={`sidebar-button ${
+              dashboard === 10 && "sidebar-button-active"
+            }`}
+            size="lg"
+            id="secondary-book-db-dashboard-button"
+            onClick={handleSetDashboard}
+          >
+            <span
+              id="secondary-book-db-dashboard-button-icon"
+              onClick={handleSetDashboard}
+            >
+             <i class="fas fa-database icon"></i>
+              Secondary Book DB
             </span>
           </Button>
         </Nav.Item>
