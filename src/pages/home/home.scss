@@ -1,0 +1,42 @@
+.top_image {
+  height: 520px;
+  width: 100%;
+  object-fit: cover;
+  background-image: url("../../assets/topbg.png");
+  box-shadow: -1px 166px 252px 63px rgba(0, 0, 0, 0.92) inset;
+  -webkit-box-shadow: -1px 166px 252px 63px rgba(0, 0, 0, 0.92) inset;
+  -moz-box-shadow: -1px 166px 252px 63px rgba(0, 0, 0, 0.92) inset;
+}
+
+.title {
+  color: white;
+  font-weight: bold;
+  font-size: 3rem;
+  margin-top: 60px;
+}
+
+.description {
+  text-align: center;
+  color: white;
+  margin-bottom: 70px;
+}
+
+.user-card {
+  margin-top: 300px;
+   opacity: 0.1;
+}
+
+.span {
+  text-align: end;
+  color: white;
+  padding: 20px;
+  margin-bottom: 70px;
+}
+
+.not-verified-message {
+  font-family: "Poppins", sans-serif;
+  a {
+    font-size: 1rem;
+    color: #721c24;
+  }
+}

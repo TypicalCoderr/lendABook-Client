@@ -1,0 +1,59 @@
+.title {
+  text-align: center;
+}
+
+.section-header {
+  text-align: center;
+  padding: 10px 10px 90px 10px;
+}
+
+.pricing-header {
+  max-width: 850px;
+  text-align: center;
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+}
+
+.card {
+  width: 280px;
+  margin-left: 5px;
+  margin-bottom: 20px;
+  height: 500px;
+  justify-content: center;
+}
+
+.card-title {
+  text-align: center;
+}
+
+.card-header-bronze {
+  background-color: #cd7f32;
+}
+
+.card-header-silver {
+  background-color: #a9a9a9;
+}
+
+.card-header-gold {
+  background-color: #ffd700;
+}
+.card-header-platinum {
+  background-color: #e5e4e2;
+}
+.pricing {
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+
+.hr {
+  border-top: 1px solid dodgerblue;
+}

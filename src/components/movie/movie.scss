@@ -1,0 +1,91 @@
+.book-box {
+  height: 25rem;
+  position: relative;
+  border: 1px solid #bbb;
+  // box-shadow: 4px 4px 15px rgba(#000, 0.15);
+  &:hover {
+    cursor: pointer;
+    border-color: #007bff;
+    border-style: groove;
+    box-shadow: 4px 4px 15px rgba(#000, 0.15);
+    // box-shadow: 0px -1px 5px 0px rgba(0, 0, 0, 0.82);
+    // -webkit-box-shadow: 0px -1px 5px 0px rgba(0, 0, 0, 0.82);
+    // -moz-box-shadow: 0px -1px 5px 0px rgba(0, 0, 0, 0.82);
+  }
+}
+.book-ribbon {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  z-index: 1;
+  overflow: hidden;
+  width: 75px;
+  height: 75px;
+  text-align: right;
+  span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 20px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    width: 100px;
+    display: block;
+    background: #79a70a;
+    background: linear-gradient(#f70505 0%, #8f0808 100%);
+    box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 19px;
+    right: -21px;
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0px;
+      top: 100%;
+      z-index: -1;
+      border-left: 3px solid #8f0808;
+      border-right: 3px solid transparent;
+      border-bottom: 3px solid transparent;
+      border-top: 3px solid #8f0808;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0px;
+      top: 100%;
+      z-index: -1;
+      border-left: 3px solid transparent;
+      border-right: 3px solid #8f0808;
+      border-bottom: 3px solid transparent;
+      border-top: 3px solid #8f0808;
+    }
+  }
+}
+.vehicle-image {
+  padding: 5px;
+  height: 18rem;
+  object-fit: contain;
+}
+
+// .vehicle-icon {
+//   height: 16px;
+//   width: 16px;
+//   object-fit: contain;
+//   margin-left: 5px;
+// }
+
+.book-info-badges {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+}
+
+.book-title {
+  padding: 5px;
+  margin-top: 5px;
+  font-weight: bold;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif !important;
+}

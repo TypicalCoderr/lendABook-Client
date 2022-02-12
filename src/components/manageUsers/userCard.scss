@@ -1,0 +1,16 @@
+.user-card {
+  position: relative;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.user-card-badge {
+  position: absolute;
+  top: 22px;
+  right: 15px;
+}
+
+.user-card-title {
+  text-align: left;
+}
