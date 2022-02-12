@@ -5,7 +5,7 @@
 ![ alt text ](https://img.shields.io/badge/React-17.0.2-61DAFB?style=for-the-badge&logo=React)
 ![ alt text ](https://img.shields.io/badge/Redux-7.2.6-764ABC?style=for-the-badge&logo=Redux)
 
-Web application for a Books and videos lending company including UI level, Endpoint, CSV and database level integrations.
+Web application for a Books and videos lending company and performs UI level, Endpoint, CSV and database level integrations.
 
 
 
