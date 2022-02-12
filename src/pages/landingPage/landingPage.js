@@ -21,9 +21,12 @@ function Home(props) {
             <h5 className="sub-title">Explore</h5>
             <h2>Unlimited Books & Movies</h2>
             <p>
-              {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercita */}
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur.
             </p>
             {!authenticated ? (
               <Button href="/user/register">Get Started</Button>
@@ -38,11 +41,12 @@ function Home(props) {
         <div className="box-1">
           <h3 className="about-title">About us</h3>
           <p className="about-description">
-            “Lend a book” is a small book and video lending company. At present
-            everything is conducted using paper-based forms. A potential
-            customer rings or physically visit the library and the desk clerk
-            checks the available list of books/videos to see if they have the
-            requested book/video for the period required.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur.
           </p>
         </div>
       </Container>
