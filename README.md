@@ -1,5 +1,3 @@
-`All rights for the source code and other related material are reserved`
-
 # Lend A Book
 
 ![ alt text ](https://img.shields.io/badge/React-17.0.2-61DAFB?style=for-the-badge&logo=React)
